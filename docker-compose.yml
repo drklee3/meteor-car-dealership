@@ -3,12 +3,17 @@ web:
     ports:
         - "8080:80"
     volumes:
-        - ./src:/var/www/html
+        - ./web:/var/www/
         - ./site.conf:/etc/nginx/conf.d/default.conf
     links:
         - php
 php:
     image: php:7-fpm
     volumes:
-        - ./src:/var/www/html
+        - ./web:/var/www/
+composer:
+    image: composer/composer:php7
+    command: install -d=/var/www/
+    volumes:
+        - ./web:/var/www/
 
