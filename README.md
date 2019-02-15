@@ -4,7 +4,7 @@ Final project for COEN 178 (Intro to Database Systems)
 
 ## Schema
 
-### Car
+### Cars
 
 Either phone, email or both have to be given
 
@@ -22,7 +22,7 @@ Either phone, email or both have to be given
 | problem_type | VARCHAR | NOT NULL    |
 | problem_id   | NUMBER  | PRIMARY KEY |
 
-### Customer
+### Customers
 
 | Field   | Type    | Constraint |
 | ------- | ------- | ---------- |
@@ -31,7 +31,7 @@ Either phone, email or both have to be given
 | email   | VARCHAR | UNIQUE     |
 | address | VARCHAR | UNIQUE     |
 
-### Repair Job
+### Repair Jobs
 
 | Field       | Type    | Constraint  |
 | ----------- | ------- | ----------- |
