@@ -4,8 +4,8 @@ Final project for COEN 178 (Intro to Database Systems)
 
 ## Installation
 
-1. [Install Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
-2. Clone Oracle Docker image
+1. Install [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
+2. Clone [Oracle docker images](https://github.com/oracle/docker-images)
     ```bash
     git clone --depth 1 https://github.com/oracle/docker-images.git
     cd docker-images/OracleDatabase/SingleInstance/dockerfiles/
