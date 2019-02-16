@@ -27,7 +27,9 @@ services:
             - ORACLE_ALLOW_REMOTE=true
         shm_size: 1gb
         volumes:
-            - ./oradata:/opt/oracle/oradata
+            - ./oracle/oradata:/u01/app/oracle/oradata
+            - ./oracle/setup:/u01/app/oracle/scripts/setup
+            - ./oracle/startup:/u01/app/oracle/scripts/startup
         ports:
             - 1521:1521
             - 8081:8080

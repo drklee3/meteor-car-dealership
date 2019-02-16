@@ -22,7 +22,7 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
         cd docker-images/OracleDatabase/SingleInstance/dockerfiles/
         ```
 
-  2. Download [Oracle Database 11.2.0.2. (11gR2) Express Edition for Linux x64](https://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/xe-prior-releases-5172097.html) (Download the Linux x64 version even if you are developing on a Windows host).  You will have to make an account first to download it... 😠
+  2. Download [Oracle Database 11.2.0.2. (11gR2) Express Edition for Linux x64](https://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/xe-prior-releases-5172097.html) (Download the Linux x64 version even if you are developing on a Windows host).  You will have to make an Oracle account first to download it... 😠
         ```bash
         # move the zip to the corresponding version directory
         mv oracle-xe-11.2.0-1.0.x86_64.rpm.zip 11.2.0.2/
@@ -52,7 +52,17 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
     docker-compose up
     ```
 
-4. Open [localhost:8080](http://localhost:8080/) in your browser
+4. Wait for the "DATABASE IS READY TO USE" message then open [localhost:8080](http://localhost:8080/) in your browser
+
+
+To access the database via `sqplus` you can use the following command:
+
+```bash
+docker exec -ti <docker image name> sqlplus <username>@<database>
+
+# example:
+docker exec -ti meteor-car-dealership_database_1 sqlplus dlee@XE
+```
 
 ## Schema
 
