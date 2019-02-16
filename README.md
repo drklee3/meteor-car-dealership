@@ -1,6 +1,13 @@
 # meteor-car-dealership
 
-Final project for COEN 178 (Intro to Database Systems)
+Final project for COEN 178 (Intro to Database Systems).  This application is designed to automate a record-maintenance system for a car repair department with the following tasks:
+
+* Maintain a detailed list of the customer records with information of the repair jobs done.  The management uses the customer records   to schedule the routine maintenance dates for its regular customers.
+* Maintain a record of the repair jobs to assist the management in customer billing, compute the mechanic’s pay. 
+* Maintain a record of all the mechanics, the repair-jobs they are responsible for and their work hours. This information helps the management compute the total pay of each mechanic. Additionally, the information helps the management assess the future hiring needs and allocation of duties to the mechanics.
+* All the information in the database helps the management assess their monthly and yearly revenues
+
+Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PLSQL procedure or function and at least one trigger.
 
 ## Prerequisites
 
