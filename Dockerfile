@@ -13,11 +13,11 @@ RUN apt-get update && apt-get -y install wget bsdtar libaio1 && \
  php -v
 
 RUN wget -O php-7.3.2.tar.gz http://us1.php.net/get/php-7.3.2.tar.gz/from/this/mirror && \
-    mkdir php_oci && \
-    mv php-7.3.2.tar.gz ./php_oci
-WORKDIR php_oci
+    mkdir /php_oci && \
+    mv php-7.3.2.tar.gz /php_oci
+WORKDIR /php_oci
 RUN tar xfvz php-7.3.2.tar.gz
-WORKDIR php-7.3.2/ext/pdo_oci
+WORKDIR /php_oci/php-7.3.2/ext/pdo_oci
 RUN phpize && \
     ./configure --with-pdo-oci=instantclient,/usr/local/instantclient,12.1 && \
     make && \
