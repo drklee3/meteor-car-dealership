@@ -1,21 +1,20 @@
 <?php
-require '../vendor/autoload.php';
-// require_once '../vendor/vlucas/phpdotenv/src/Dotenv.php';
-// require_once '../vendor/vlucas/phpdotenv/src/Loader.php';
+	declare(strict_types=1);
 
-$dotenv = Dotenv\Dotenv::create("../src/");
-$dotenv->load();
+	require "../vendor/autoload.php";
+	// require_once "../vendor/vlucas/phpdotenv/src/Dotenv.php";
+	// require_once "../vendor/vlucas/phpdotenv/src/Loader.php";
 
-echo $_ENV['TEST'];
+	$dotenv = Dotenv\Dotenv::create("../");
+	$dotenv->load();
 
-/*
-$conn = oci_connect('username', 'password', '//dbserver.engr.scu.edu/db11g');
-if($conn) {
-	print "<br> connection successful";
-} else {
-	$e = oci_error;
-	print "<br> connection failed:";
-	print htmlentities($e['message']);
-	exit;
-}*/
+	$conn = oci_connect($_ENV["ORACLE_USR"], $_ENV["ORACLE_PWD"], $_ENV["ORACLE_URL"]);
+	if($conn) {
+		print "connection successful yea boiiiiiiiii";
+	} else {
+		$e = oci_error();
+		print "connection failed: ";
+		print htmlentities($e["message"]);
+		exit;
+	}
 ?>
