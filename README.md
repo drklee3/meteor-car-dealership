@@ -17,7 +17,7 @@ Final project for COEN 178 (Intro to Database Systems)
         # move the zip to the corresponding version directory
         mv oracle-xe-11.2.0-1.0.x86_64.rpm.zip 11.2.0.2/
         ```
-     1. Build the Oracle Database Express Edition 11.2.0.2 Docker image
+  3. Build the Oracle Database Express Edition 11.2.0.2 Docker image
        ```bash
        ./buildDockerImage.sh -v 11.2.0.2 -x
        ```
