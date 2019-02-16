@@ -23,14 +23,14 @@ Final project for COEN 178 (Intro to Database Systems)
     ```bash
     git clone https://github.com/drklee3/meteor-car-dealership.git
     ```
-5. Create an .env file. You can change the Oracle database password in the
+6. Create an .env file. You can change the Oracle database password in the
     [.env file](web/.env.example)
     ```bash
     cd web
     # copy the example environment file
     cp .env.example .env
     ```
-6. Run docker containers
+7. Run docker containers
     ```bash
     docker-compose up
     ```
