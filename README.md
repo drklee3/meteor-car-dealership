@@ -75,7 +75,10 @@ Tests are located in [`web/tests/`](web/tests/) utilizing [PHPUnit](https://phpu
 You can run the tests within the running php Docker container via the following command
 
 ```bash
-docker exec meteor-car-dealership_php_1 bash -c "cd /var/www; ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
+docker exec meteor-car-dealership_php_1 \
+    bash -c \
+    "cd /var/www; \
+    ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
 ```
 
 ## Schema
