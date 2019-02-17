@@ -15,53 +15,67 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
 
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
-* [Oracle Database](https://github.com/oracle/docker-images)
-  1. Clone [Oracle docker images](https://github.com/oracle/docker-images)
+* Oracle Database XE
+  1. Clone [Oracle docker images](https://github.com/oracle/docker-images).
+
         ```bash
         git clone --depth 1 https://github.com/oracle/docker-images.git
         cd docker-images/OracleDatabase/SingleInstance/dockerfiles/
         ```
 
   2. Download [Oracle Database 11.2.0.2. (11gR2) Express Edition for Linux x64](https://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/xe-prior-releases-5172097.html) (Download the Linux x64 version even if you are developing on a Windows host).  You will have to make an Oracle account first to download it... 😠
+
         ```bash
         # move the zip to the corresponding version directory
         mv oracle-xe-11.2.0-1.0.x86_64.rpm.zip 11.2.0.2/
         ```
 
-  3. Build the Oracle Database Express Edition 11.2.0.2 Docker image
+  3. Build the Oracle Database Express Edition 11.2.0.2 Docker image.
+
        ```bash
        ./buildDockerImage.sh -v 11.2.0.2 -x
        ```
 
 ## Installation
 
-1. Clone this repository
+1. Clone this repository.
+
     ```bash
     git clone https://github.com/drklee3/meteor-car-dealership.git
     ```
 
-2. Create an .env file from the example given. You can change the Oracle database password in the
-    [.env file](web/.env.example)
+2. Create an .env file from the example given. You can change the Oracle database password in the [.env file](web/.env.example).
+
     ```bash
     # copy the example environment file
     cp web/.env.example web/.env
     ```
 
-3. Run docker containers
+3. Run docker containers.
+
     ```bash
     docker-compose up
     ```
 
-4. Wait for the "DATABASE IS READY TO USE" message then open [localhost:8080](http://localhost:8080/) in your browser
+4. Wait for the `DATABASE IS READY TO USE` message, then open [localhost:8080](http://localhost:8080/) in your browser.
 
+    To access the database via `sqplus` you can use the following command
 
-To access the database via `sqplus` you can use the following command:
+    ```bash
+    docker exec -ti <docker image name> sqlplus <username>@<database>
+
+    # example
+    docker exec -ti meteor-car-dealership_database_1 sqlplus dlee@XE
+    ```
+
+## Testing
+
+Tests are located in [`web/tests/`](web/tests/) utilizing [PHPUnit](https://phpunit.de/index.html).
+
+You can run the tests within the running php Docker container via the following command
 
 ```bash
-docker exec -ti <docker image name> sqlplus <username>@<database>
-
-# example:
-docker exec -ti meteor-car-dealership_database_1 sqlplus dlee@XE
+docker exec meteor-car-dealership_php_1 bash -c "cd /var/www; ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
 ```
 
 ## Schema
