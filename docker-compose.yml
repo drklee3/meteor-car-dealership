@@ -15,8 +15,8 @@ services:
         volumes:
             - ./web:/var/www/
     composer:
-        image: composer/composer:php7
-        command: install -d=/var/www/
+        image: composer:latest
+        command: install -d /var/www/
         volumes:
             - ./web:/var/www/
     database:
