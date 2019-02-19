@@ -1,4 +1,5 @@
 **/.env
 **/vendor
-**/oradata
+**/oradata/*
+!**/oradata/.gitkeep
 **/.phpunit*
