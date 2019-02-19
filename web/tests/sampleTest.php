@@ -3,10 +3,8 @@
 
     use PHPUnit\Framework\TestCase;
 
-    final class sampleTest extends TestCase
-    {
-        public function testIsEqual(): void
-        {
+    final class sampleTest extends TestCase {
+        public function testIsEqual(): void {
             $this->assertEquals(
                 'hello world',
                 'hello ' . 'world'
