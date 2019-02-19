@@ -44,7 +44,7 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
     git clone https://github.com/drklee3/meteor-car-dealership.git
     ```
 
-2. Create and update a `oracle/setup/create_user.sql` file from the given [`example`](oracle/setup/create_user.sql.example) with an unique username and password for the Oracle database.
+2. Create and update a `oracle/setup/create_user.sql` file from the given [example](oracle/setup/create_user.sql.example) with an unique username and password for the Oracle database.
     If you skip this step you will have to create your user and grant according permissions manually via SQL*Plus **or** delete database data shown below and restart.
 
     ```bash
