@@ -1,4 +1,5 @@
 **/.env
+**/create_user.sql
 **/vendor
 **/oradata/*
 !**/oradata/.gitkeep

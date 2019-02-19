@@ -21,8 +21,6 @@ services:
             - ./web:/var/www/
     database:
         image: oracle/database:11.2.0.2-xe
-        env_file:
-            - ./web/.env
         environment:
             - ORACLE_ALLOW_REMOTE=true
         shm_size: 1gb

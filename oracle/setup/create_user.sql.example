@@ -1,0 +1,22 @@
+ALTER DATABASE DEFAULT TABLESPACE USERS;
+
+SET SERVEROUTPUT ON SIZE UNLIMITED;
+DECLARE
+   -- MODIFY THESE TWO VARIABLES TO CHANGE USERNAME/PASSWORD
+   username VARCHAR2(64) := 'dlee';
+   pwd      VARCHAR2(64) := 'Hunter2';
+   -- DO NOT MODIFY ANYTHING BELOW THIS
+BEGIN
+   EXECUTE IMMEDIATE 'CREATE USER ' || username || '
+              IDENTIFIED BY ' || pwd || ' 
+                      QUOTA UNLIMITED
+                         ON USERS';
+   EXECUTE IMMEDIATE 'GRANT CONNECT,
+                            CREATE TABLE,
+                            CREATE VIEW,
+                            CREATE PROCEDURE,
+                            CREATE SEQUENCE
+                         TO ' || username;
+END;
+/
+

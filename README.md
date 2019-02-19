@@ -44,20 +44,34 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
     git clone https://github.com/drklee3/meteor-car-dealership.git
     ```
 
-2. Create an .env file from the example given. You can change the Oracle database password in the [.env file](web/.env.example).
+2. Create and update a `oracle/setup/create_user.sql` file from the given [`example`](oracle/setup/create_user.sql.example) with an unique username and password for the Oracle database.
+    If you skip this step you will have to create your user and grant according permissions manually via SQL*Plus **or** delete database data shown below and restart.
 
     ```bash
-    # copy the example environment file
-    cp web/.env.example web/.env
+    cd oracle/setup/
+    # copy the sample file
+    cp create_user.sql.sample create_user.sql
+    # update the username / password variables in the file
+    vim create_user.sql
     ```
 
-3. Run docker containers.
+3. Create an .env file from the given [example](web/.env.example). Update the `ORACLE_USR` and `ORACLE_PWD` variables with your credentials you used above.
+
+    ```bash
+    cd web
+    # copy the example environment file
+    cp .env.example .env
+    # update ORACLE_USR and ORACLE_PWD
+    vim .env
+    ```
+
+4. Run docker containers.
 
     ```bash
     docker-compose up
     ```
 
-4. Wait for the `DATABASE IS READY TO USE` message, then open [localhost:8080](http://localhost:8080/) in your browser.
+5. Wait for the `DATABASE IS READY TO USE` message, then open [localhost:8080](http://localhost:8080/) in your browser.
 
     To access the database via `sqplus` you can use the following command
 
@@ -80,6 +94,32 @@ docker exec meteor-car-dealership_php_1 \
     "cd /var/www; \
     ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
 ```
+
+## Troubleshooting
+
+* To delete the database data
+
+    ```bash
+    docker-compose down
+    rm -rf oradata/*
+    ```
+
+* If on startup you get database errors similar to the following
+
+    ```text
+    database_1  | mkdir: cannot create directory '/u01/app/oracle/oradata': Permission denied
+    database_1  | mv: failed to access '/u01/app/oracle/oradata/dbconfig/XE/': Permission denied
+    database_1  | mv: failed to access '/u01/app/oracle/oradata/dbconfig/XE/': Permission denied
+    database_1  | mv: failed to access '/u01/app/oracle/oradata/dbconfig/XE/': Permission denied
+    database_1  | mv: failed to access '/u01/app/oracle/oradata/dbconfig/XE/': Permission denied
+    ```
+
+    Delete and recreate the `oracle/oradata` directory as your user instead of root
+
+    ```bash
+    sudo rm -rf oracle/oradata
+    mkdir oracle/oradata
+    ```
 
 ## Schema
 
