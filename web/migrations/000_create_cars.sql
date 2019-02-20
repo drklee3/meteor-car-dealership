@@ -6,5 +6,5 @@ CREATE TABLE cars (
     CONSTRAINT phone_or_email
          CHECK (phone IS NOT NULL
             OR email IS NOT NULL)
-);
+)
 
