@@ -97,7 +97,7 @@ docker exec meteor-car-dealership_php_1 \
 
 ## Troubleshooting
 
-* To delete the database data
+* To delete the database data, stop any running docker containers (ctrl + c if you ran `docker-compose up`) then run the following
 
     ```bash
     docker-compose down
