@@ -1,5 +1,5 @@
 <?php
-    declare(strict_types=1);
+    declare(strict_types = 1);
 
     class DirReadException extends Exception {
     }
@@ -7,14 +7,18 @@
     class Migrations {
         // path to migrations directory
         private $migrations_path;
+
         // list of migration files
         private $files;
+
         // path to history file
         private $hist_path;
+
         // list of already executed migrations
         private $history = array();
-        // database connection
-        private $conn;
+
+        // database
+        private $db;
 
         public function __construct(
             string $migrations_path = "../migrations/",
@@ -45,9 +49,9 @@
          * @param resource $conn database connection
          * @return void
          */
-        public function start($conn): void {
+        public function start($db): void {
             $this->read_dir();
-            $this->conn = $conn;
+            $this->db = $db;
             // execute 
             $this->run_migrations();
         }
@@ -84,10 +88,15 @@
             $pending_migrations = array_diff($this->files, $this->history);
 
             foreach ($pending_migrations as $mig) {
-                $sql = file_get_contents($mig);
-                $stid = oci_parse($conn, $sql);
-		        oci_execute($stid);
+                $path = $this->migrations_path . $mig;
+                $sql = file_get_contents($path);
+
+                $this->db->run_query($sql);
+                // add query to history file
+                $this->history[] = $mig;
             }
+
+            $this->save_migrations();
         }
 
         /**
