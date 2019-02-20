@@ -1,13 +1,13 @@
 <?php
 	declare(strict_types = 1);
-    require_once "../vendor/autoload.php";
+    require_once __DIR__ . "/../vendor/autoload.php";
     
     /**
      * Database connections
      */
     class Database {
 		function __construct() {
-			$dotenv = Dotenv\Dotenv::create("../");
+			$dotenv = Dotenv\Dotenv::create(__DIR__ . "/../");
 			$dotenv->load();
 		}
         
@@ -24,11 +24,53 @@
 			);
 
 			if (!$conn) {
-				$e = oci_error()["message"];
-				throw new Exception("Failed to connect to the database: $e");
+				$e = oci_error();
+				throw new Exception("Failed to connect to the database: " . $e["message"]);
 			}
 
 			return $conn;
-		}
+        }
+
+        /**
+         * Executes a SQL without response
+         *
+         * @param string $sql
+         * @return void
+         */
+        public function execute(string $sql): void {
+            $conn = $this->get_connection();
+
+            $stid = oci_parse($conn, $sql);
+            $res = oci_execute($stid);
+
+            if ($res === FALSE) {
+                $e = oci_error($conn);
+                trigger_error(htmlentities($e["message"]), E_USER_ERROR);
+                throw new Exception("Error running migrations: " . $e["message"]);
+            }
+        }
+        
+        /**
+         * Runs a SQL query and gets all rows returned
+         *
+         * @param string $sql
+         * @return array [# of returned rows, rows]
+         */
+        public function get_results(string $sql): array {
+            $conn = $this->get_connection();
+
+            $stid = oci_parse($conn, $sql);
+            $res = oci_execute($stid);
+            
+            if ($res === FALSE) {
+                $e = oci_error($conn);
+                trigger_error(htmlentities($e["message"]), E_USER_ERROR);
+                throw new Exception("Error running migrations: " . $e["message"]);
+            }
+
+            $nrows = oci_fetch_all($stid, $rows);
+
+            return array($nrows, $rows);
+        }
 	}
 ?>
