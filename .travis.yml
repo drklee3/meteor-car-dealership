@@ -1,5 +1,5 @@
 language: php
-
+sudo: required
 services:
   - docker
 
@@ -7,6 +7,8 @@ before_install:
   - chmod +x setup.sh
   - bash setup.sh -de
   - chmod 777 -R oracle
+  - ls -l
+  - ls -l oracle/
   - docker-compose up
   - docker ps -a
 
