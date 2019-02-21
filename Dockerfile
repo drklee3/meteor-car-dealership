@@ -16,7 +16,7 @@ RUN wget -O php-7.3.2.tar.gz http://us1.php.net/get/php-7.3.2.tar.gz/from/this/m
     mkdir /php_oci && \
     mv php-7.3.2.tar.gz /php_oci
 WORKDIR /php_oci
-RUN tar xfvz php-7.3.2.tar.gz
+RUN tar xfz php-7.3.2.tar.gz
 WORKDIR /php_oci/php-7.3.2/ext/pdo_oci
 RUN phpize && \
     ./configure --with-pdo-oci=instantclient,/usr/local/instantclient,12.1 && \
