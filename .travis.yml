@@ -2,6 +2,8 @@ services:
   - docker
 
 before_install:
+  - chmod +x setup.sh
+  - bash setup.sh -de
   - docker-compose up
   - docker ps -a
 
