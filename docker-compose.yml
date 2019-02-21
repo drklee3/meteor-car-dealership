@@ -1,6 +1,7 @@
-version: '3'
+version: "3.3"
 services:
     web:
+        container_name: meteor_nginx
         image: nginx:latest
         ports:
             - "8080:80"
@@ -11,24 +12,31 @@ services:
             - php
             - database
     php:
-        build: .
+        container_name: meteor_php
+        build: ./docker/php
         volumes:
             - ./web:/var/www/
     composer:
+        container_name: meteor_composer
         image: composer:latest
         command: install -d /var/www/
         volumes:
             - ./web:/var/www/
     database:
+        container_name: meteor_oracle
         image: oracle/database:11.2.0.2-xe
         environment:
             - ORACLE_ALLOW_REMOTE=true
         shm_size: 1gb
         volumes:
-            - ./oracle/oradata:/u01/app/oracle/oradata
+            - type: volume
+              source: db-data
+              target: /u01/app/oracle/oradata
             - ./oracle/setup:/u01/app/oracle/scripts/setup
             - ./oracle/startup:/u01/app/oracle/scripts/startup
         ports:
             - 1521:1521
             - 8081:8080
             - 5500:5500
+volumes:
+    db-data:

@@ -1,5 +1,7 @@
 # meteor-car-dealership
 
+[![Build Status](https://travis-ci.org/drklee3/meteor-car-dealership.svg?branch=master)](https://travis-ci.org/drklee3/meteor-car-dealership)
+
 Final project for COEN 178 (Intro to Database Systems).  This application is designed to automate a record-maintenance system for a car repair department with the following tasks:
 
 * Maintain a detailed list of the customer records with information of the repair jobs done.  The management uses the customer records to schedule the routine maintenance dates for its regular customers.
@@ -89,10 +91,28 @@ Tests are located in [`web/tests/`](web/tests/) utilizing [PHPUnit](https://phpu
 You can run the tests within the running php Docker container via the following command
 
 ```bash
-docker exec meteor-car-dealership_php_1 \
+docker exec meteor_php \
     bash -c \
     "cd /var/www; \
     ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
+```
+
+## Back up / Restore Database
+
+You can make a tar archive of the Database content via the following commands
+
+```bash
+# backup volume in Oracle container
+$ docker run --rm --volumes-from meteor_oracle -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /u01/app/oracle/oradata
+```
+
+To restore data
+
+```bash
+# restore to Oracle container's volume
+docker run -v /u01/app/oracle/oradata --name db_data ubuntu /bin/bash
+
+docker run --rm --volumes-from db_data -v $(pwd):/backup ubuntu bash -c "cd /u01/app/oracle/oradata && tar xvf /backup/backup.tar --strip 1"
 ```
 
 ## Troubleshooting

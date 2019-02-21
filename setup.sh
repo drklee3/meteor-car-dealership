@@ -8,7 +8,7 @@ AUTH_FROM_ENV="false"
 install_docker() {
     echo "Installing Dependencies"
     # install prereqs
-    sudo apt-get install \
+    sudo apt-get install -y \
         apt-transport-https \
         ca-certificates \
         curl \
@@ -25,7 +25,7 @@ install_docker() {
     stable"
 
     sudo apt update
-    sudo apt install docker-ce
+    sudo apt install -y docker-ce
 
     echo "Installing Docker Compose"
 
@@ -47,7 +47,7 @@ build_oracle() {
     cd docker-images/OracleDatabase/SingleInstance/dockerfiles/
 
     if [ $AUTH_FROM_ENV == "false" ]; then
-        read -p "Enter password: " passwd
+        read -sp "Enter password: " passwd
     else
         # copy password from env
         passwd=$ORACLE_BIN_PWD
@@ -108,6 +108,7 @@ if [ $AUTH_FROM_ENV == "false" ]; then
     read -sp "Enter Oracle password: " ORACLE_PWD
     echo ""
     read -sp "Confirm password: " ORACLE_PWD_CNFM
+    echo ""
 
     if [ "$ORACLE_PWD" != "$ORACLE_PWD_CNFM" ]; then
         echo "Password does not match"

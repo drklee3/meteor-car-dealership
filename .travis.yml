@@ -1,20 +1,17 @@
-language: php
+language: generic
 sudo: required
 services:
   - docker
 
 before_install:
+  - docker --version
   - chmod +x setup.sh
   - bash setup.sh -de
-  - chmod 777 -R oracle
-  - sudo chown 54321:54321 -R oracle
-  - ls -l
-  - ls -l oracle/
-  - docker-compose up
+  - docker-compose up -d
   - docker ps -a
 
+before_script:
+  - sleep 240
+
 script:
-  - docker exec meteor-car-dealership_php_1 \
-      bash -c \
-      "cd /var/www; \
-      ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
+  - docker exec meteor_php /bin/bash -c "cd /var/www; ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
