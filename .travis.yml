@@ -7,7 +7,7 @@ before_install:
   - chmod +x setup.sh
   - bash setup.sh -de
   - chmod 777 -R oracle
-  - chown 54321:54321 -R oracle
+  - sudo chown 54321:54321 -R oracle
   - ls -l
   - ls -l oracle/
   - docker-compose up
