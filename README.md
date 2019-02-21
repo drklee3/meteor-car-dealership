@@ -1,6 +1,6 @@
-# meteor-car-dealership
-
 [![Build Status](https://travis-ci.org/drklee3/meteor-car-dealership.svg?branch=master)](https://travis-ci.org/drklee3/meteor-car-dealership)
+
+# meteor-car-dealership
 
 Final project for COEN 178 (Intro to Database Systems).  This application is designed to automate a record-maintenance system for a car repair department with the following tasks:
 
