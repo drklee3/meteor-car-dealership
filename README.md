@@ -49,8 +49,8 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
 
     ```bash
     cd oracle/setup/
-    # copy the sample file
-    cp create_user.sql.sample create_user.sql
+    # copy the example file
+    cp create_user.sql.example create_user.sql
     # update the username / password variables in the file
     vim create_user.sql
     ```
