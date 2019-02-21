@@ -6,6 +6,7 @@ services:
 before_install:
   - chmod +x setup.sh
   - bash setup.sh -de
+  - chmod 777 -R oracle
   - docker-compose up
   - docker ps -a
 
