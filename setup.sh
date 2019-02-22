@@ -52,7 +52,7 @@ build_oracle() {
     if [ $MANUAL_ORACLE_DOWNLOAD == "false" ]; then
         # password for oracle binaries
         if [ $AUTH_FROM_ENV == "false" ]; then
-            read -sp "Enter password: " passwd
+            read -sp "Enter download password: " passwd
         else
             # copy password from env
             passwd=$ORACLE_BIN_PWD
