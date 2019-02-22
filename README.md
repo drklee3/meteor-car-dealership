@@ -115,30 +115,13 @@ docker run -v /u01/app/oracle/oradata --name db_data ubuntu /bin/bash
 docker run --rm --volumes-from db_data -v $(pwd):/backup ubuntu bash -c "cd /u01/app/oracle/oradata && tar xvf /backup/backup.tar --strip 1"
 ```
 
-## Troubleshooting
-
-* To delete the database data, stop any running docker containers (ctrl + c if you ran `docker-compose up`) then run the following
+To delete the database data, stop any running docker containers (ctrl + c if you ran `docker-compose up`) then run the following
 
     ```bash
     docker-compose down
-    rm -rf oradata/*
-    ```
 
-* If on startup you get database errors similar to the following
-
-    ```text
-    database_1  | mkdir: cannot create directory '/u01/app/oracle/oradata': Permission denied
-    database_1  | mv: failed to access '/u01/app/oracle/oradata/dbconfig/XE/': Permission denied
-    database_1  | mv: failed to access '/u01/app/oracle/oradata/dbconfig/XE/': Permission denied
-    database_1  | mv: failed to access '/u01/app/oracle/oradata/dbconfig/XE/': Permission denied
-    database_1  | mv: failed to access '/u01/app/oracle/oradata/dbconfig/XE/': Permission denied
-    ```
-
-    Delete and recreate the `oracle/oradata` directory as your user instead of root
-
-    ```bash
-    sudo rm -rf oracle/oradata
-    mkdir oracle/oradata
+    # find volume name via docker volume ls
+    docker volume rm meteor-car-dealership_db-data
     ```
 
 ## Schema
