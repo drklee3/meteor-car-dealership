@@ -4,6 +4,9 @@ ORACLE_BIN_URL="https://meteor.drklee.me/protected/oracle-xe-11.2.0-1.0.x86_64.r
 SHOULD_INSTALL_DOCKER="true"
 SHOULD_BUILD_ORACLE="true"
 AUTH_FROM_ENV="false"
+MANUAL_ORACLE_DOWNLOAD="false"
+
+trap "exit" INT
 
 install_docker() {
     echo "Installing Dependencies"
@@ -46,18 +49,23 @@ build_oracle() {
     git clone --depth 1 https://github.com/oracle/docker-images.git
     cd docker-images/OracleDatabase/SingleInstance/dockerfiles/
 
-    if [ $AUTH_FROM_ENV == "false" ]; then
-        read -sp "Enter password: " passwd
-    else
-        # copy password from env
-        passwd=$ORACLE_BIN_PWD
-    fi
+    if [ $MANUAL_ORACLE_DOWNLOAD == "false" ]; then
+        # password for oracle binaries
+        if [ $AUTH_FROM_ENV == "false" ]; then
+            read -sp "Enter password: " passwd
+        else
+            # copy password from env
+            passwd=$ORACLE_BIN_PWD
+        fi
 
-    echo "Downloading Oracle"
-    wget -P 11.2.0.2/ --user hello --password "$passwd" "$ORACLE_BIN_URL"
-    if [[ $? -ne 0 ]]; then
-        echo "Invalid password"
-        exit 1; 
+        echo "Downloading Oracle"
+        wget -P 11.2.0.2/ --user hello --password "$passwd" "$ORACLE_BIN_URL"
+        if [[ $? -ne 0 ]]; then
+            echo "Invalid password, download Oracle manually"
+            exit 1; 
+        fi
+    else
+        mv ../../../../oracle-xe-11.2.0-1.0.x86_64.rpm.zip ./11.2.0.2/
     fi
 
     # build oracle database xe
@@ -72,19 +80,21 @@ build_oracle() {
 usage() {
   echo "Usage: $0 [-dh]"
   echo "  -d          skip installation of Docker and Docker Compose"
-  echo "  -o          skip build of Oracle Docker image"
   echo "  -e          read authentication options from environment"
+  echo "  -o          skip build of Oracle Docker image"
+  echo "  -m          use manually downloaded Oracle binaries"
   echo "  -h          display help"
   exit 1
 }
 
 # parse input flags
-while getopts "doeh" flag; do
+while getopts "dehmo" flag; do
   case $flag in
     d) SHOULD_INSTALL_DOCKER="false" ;;
-    o) SHOULD_BUILD_ORACLE="false" ;;
     e) AUTH_FROM_ENV="true" ;;
     h) usage ;;
+    m) MANUAL_ORACLE_DOWNLOAD="true" ;;
+    o) SHOULD_BUILD_ORACLE="false" ;;
     *) echo "Unexpected option ${flag}"; exit 2;;
   esac
 done

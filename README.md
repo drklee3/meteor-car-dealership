@@ -40,6 +40,29 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
 
 ## Installation
 
+You can install the prerequisites listed above along with required dependencies with the provided script.  There will be certain steps where you need to input a desired login username and password for the database.  You can skip certain steps by passing the corresponding flags.
+
+```bash
+chmod +x setup.sh
+
+# will install Docker, Docker Compose, & Oracle
+# and configure the Database with given authentication options
+./setup.sh
+```
+
+```text
+Usage: ./setup.sh [-dh]
+  -d          skip installation of Docker and Docker Compose
+  -o          skip build of Oracle Docker image
+  -e          read authentication options from environment
+  -m          use manually downloaded Oracle binaries
+  -h          display help
+```
+
+If you are manually downloading the Oracle Database binaries, download them to the root directory in this repository then run the script with the `-m` flag.  Do not unzip the file.
+
+## Manual Installation
+
 1. Clone this repository.
 
     ```bash
@@ -97,7 +120,7 @@ docker exec meteor_php \
     ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
 ```
 
-## Back up / Restore Database
+## Back Up / Restore Database
 
 You can make a tar archive of the Database content via the following commands
 
@@ -117,12 +140,12 @@ docker run --rm --volumes-from db_data -v $(pwd):/backup ubuntu bash -c "cd /u01
 
 To delete the database data, stop any running docker containers (ctrl + c if you ran `docker-compose up`) then run the following
 
-    ```bash
-    docker-compose down
+```bash
+docker-compose down
 
-    # find volume name via docker volume ls
-    docker volume rm meteor-car-dealership_db-data
-    ```
+# find volume name via docker volume ls
+docker volume rm meteor-car-dealership_db-data
+```
 
 ## Schema
 
