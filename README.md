@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/drklee3/meteor-car-dealership.svg?branch=master)](https://travis-ci.org/drklee3/meteor-car-dealership)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f970b9ee9265492d85f74c7c806f6d6b)](https://www.codacy.com/app/drklee3/meteor-car-dealership?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=drklee3/meteor-car-dealership&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://img.shields.io/travis/drklee3/meteor-car-dealership.svg?style=for-the-badge)](https://travis-ci.org/drklee3/meteor-car-dealership)
+[![Codacy grade](https://img.shields.io/codacy/grade/f970b9ee9265492d85f74c7c806f6d6b.svg?style=for-the-badge)](https://www.codacy.com/app/drklee3/meteor-car-dealership?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=drklee3/meteor-car-dealership&amp;utm_campaign=Badge_Grade)
 
 # meteor-car-dealership
 
