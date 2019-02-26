@@ -7,6 +7,9 @@
 
     $mig = new Migrations("../migrations/", "../.migrations");
     $db = new Database;
-    $conn = $db->get_connection();
-    $mig->start($conn);
+    try {
+        $mig->start($db);
+    } catch (Exception $e) {
+        echo "Error running migrations: " . $e;
+    }
 ?>

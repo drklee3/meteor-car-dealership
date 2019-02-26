@@ -41,7 +41,7 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
 
 ## Installation
 
-You can install the prerequisites listed above along with required dependencies with the provided script.  There will be certain steps where you need to input a desired login username and password for the database.  You can skip certain steps by passing the corresponding flags.
+You can install the prerequisites listed above along with required dependencies with the provided `setup.sh` script.  You need to input a desired login username and password for the database after installation finishes.  You can skip certain steps by passing the corresponding flags.
 
 ```bash
 chmod +x setup.sh

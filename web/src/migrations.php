@@ -24,8 +24,8 @@
             string $migrations_path = "../migrations/",
             string $hist_path = "./.migrations") {
             // update paths
-            $this->migrations_path = $migrations_path;
-            $this->hist_path = $hist_path;
+            $this->migrations_path = __DIR__ . "/" . $migrations_path;
+            $this->hist_path = __DIR__ . "/" . $hist_path;
             
             // read history file
             $this->read_hist();
@@ -39,7 +39,10 @@
         private function read_hist(): void {
             // file already exists, open
             if (file_exists($this->hist_path)) {
-                $this->history = file($this->hist_path);
+                $this->history = explode(
+                    "\n",
+                    file_get_contents($this->hist_path)
+                );
             }
         }
 
@@ -89,9 +92,19 @@
 
             foreach ($pending_migrations as $mig) {
                 $path = $this->migrations_path . $mig;
+                
+                // ignore empty paths
+                if ($path === "") {
+                    continue;
+                }
+
                 $sql = file_get_contents($path);
 
-                $this->db->run_query($sql);
+                // ignore empty migrations
+                if ($sql !== "") {
+                    $this->db->execute($sql);
+                }
+
                 // add query to history file
                 $this->history[] = $mig;
             }
@@ -105,7 +118,10 @@
          * @return void
          */
         private function save_migrations(): void {
-            $bytes_written = file_put_contents($this->hist_path, $this->history);
+            $bytes_written = file_put_contents(
+                $this->hist_path,
+                implode("\n", $this->history)
+            );
 
             if ($bytes_written === false) {
                 throw new Exception("Failed to write migration history file");
