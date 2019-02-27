@@ -12,7 +12,34 @@ Final project for COEN 178 (Intro to Database Systems).  This application is des
 
 Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PLSQL procedure or function and at least one trigger.
 
-## Prerequisites
+## Installation (Script)
+
+You can install the prerequisites listed above along with required dependencies with the provided `setup.sh` script.  You need to input a desired login username and password for the database after installation finishes.  You can skip certain steps by passing the corresponding flags.
+
+```bash
+chmod +x setup.sh
+
+# will install Docker, Docker Compose, & Oracle
+# and configure the Database with given authentication options
+./setup.sh
+```
+
+```text
+Usage: ./setup.sh [-dh]
+  -d          skip installation of Docker and Docker Compose
+  -o          skip build of Oracle Docker image
+  -e          read authentication options from environment
+  -m          use manually downloaded Oracle binaries
+  -h          display help
+```
+
+If you are manually downloading the Oracle Database binaries, download them to the root directory in this repository then run the script with the `-m` flag.  Do not unzip the file.
+
+## Manual Installation
+
+### Prerequisites
+
+You will need to download and install the following prerequisites.
 
 * [Docker](https://docs.docker.com/install/)
 
@@ -39,30 +66,7 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
        ./buildDockerImage.sh -v 11.2.0.2 -x
        ```
 
-## Installation
-
-You can install the prerequisites listed above along with required dependencies with the provided `setup.sh` script.  You need to input a desired login username and password for the database after installation finishes.  You can skip certain steps by passing the corresponding flags.
-
-```bash
-chmod +x setup.sh
-
-# will install Docker, Docker Compose, & Oracle
-# and configure the Database with given authentication options
-./setup.sh
-```
-
-```text
-Usage: ./setup.sh [-dh]
-  -d          skip installation of Docker and Docker Compose
-  -o          skip build of Oracle Docker image
-  -e          read authentication options from environment
-  -m          use manually downloaded Oracle binaries
-  -h          display help
-```
-
-If you are manually downloading the Oracle Database binaries, download them to the root directory in this repository then run the script with the `-m` flag.  Do not unzip the file.
-
-## Manual Installation
+### Installation (Manual)
 
 1. Clone this repository.
 
@@ -107,6 +111,33 @@ If you are manually downloading the Oracle Database binaries, download them to t
     # example
     docker exec -ti meteor-car-dealership_database_1 sqlplus dlee@XE
     ```
+
+## Project Layout
+
+This application uses the following technologies: [Docker](https://www.docker.com/) (OS level virtualization / containerization), [nginx](https://nginx.org/en/) (HTTP server), [PHP-FPM](https://php-fpm.org/) (FastCGI Process Manager for PHP), [composer](https://getcomposer.org/) (Dependency Manager for PHP), [Oracle Database XE](https://www.oracle.com/database/technologies/appdev/xe.html) (a database duh).
+
+### Directory / File Structure
+
+Bolded directories are where the important logic of the application is located.
+
+* [docker](docker/) - Dockerfiles used to create Docker images.
+* [oracle](oracle/) - Set up and start up scripts for Oracle Database.
+* [web](web/) - Website content.
+  * [**migrations**](web/migrations/) - SQL migrations. These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.
+  * [**public**](web/public/) - The root directory of the publicly accessible web server. Avoid storing private information or keys here.
+  * [**src**](web/src/) - Source code of the web application.  Private information can be stored here.
+  * [**tests**](web/tests/) - PHP unit tests.
+  * [vendor](web/vendor/) - Dependency files.
+  * [.env.example](web/.env.example) - Example environment file for database authentication options. The file that will actually be used is `.env` in the same directory.
+  * .migrations - File to store migrations that have been already run.
+  * [composer.json](web/composer.json) - PHP dependencies.
+* [docker-compose.yml](docker-compose.yml) - Defines and runs multi-container Docker applications.
+* [setup.sh](setup.sh) - Setup script to install dependencies and setup the database.
+* [site.conf](site.conf) - nginx configuration.
+
+## Troubleshooting
+
+If you run into a permission error relating to saving the `.migrations` file, create an empty file called `.migrations` in the `web/` directory.  Then allow give ownership to the `http` user / group with the command `chown http:http .migrations` and grant read / write permissions to owner with `chmod 644 .migrations`.
 
 ## Testing
 
