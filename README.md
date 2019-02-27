@@ -127,7 +127,6 @@ Bolded directories are where the important logic of the application is located.
   * [**public**](web/public/) - The root directory of the publicly accessible web server. Avoid storing private information or keys here.
   * [**src**](web/src/) - Source code of the web application.  Private information can be stored here.
   * [**tests**](web/tests/) - PHP unit tests.
-  * [vendor](web/vendor/) - Dependency files.
   * [.env.example](web/.env.example) - Example environment file for database authentication options. The file that will actually be used is `.env` in the same directory.
   * .migrations - File to store migrations that have been already run.
   * [composer.json](web/composer.json) - PHP dependencies.
