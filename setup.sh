@@ -53,6 +53,7 @@ build_oracle() {
         # password for oracle binaries
         if [ $AUTH_FROM_ENV == "false" ]; then
             read -sp "Enter download password: " passwd
+            echo ""
         else
             # copy password from env
             passwd=$ORACLE_BIN_PWD
@@ -145,6 +146,11 @@ sed -i "s/Hunter2/$ORACLE_PWD/g" oracle/setup/create_user.sql
 cp web/.env.example web/.env
 sed -i "s/dlee/$ORACLE_USR/g" web/.env
 sed -i "s/Hunter2/$ORACLE_PWD/g" web/.env
+
+# create migrations file
+touch web/.migrations
+# give permissions probably not good idea for 777 but oh well
+chmod 777 web/.migrations
 
 printf "Set up complete! Run the following to start the application:\n"
 printf "\t docker-compose up\n\n"
