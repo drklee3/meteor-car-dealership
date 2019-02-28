@@ -145,18 +145,21 @@ Bolded directories are where the important logic of the application is located.
 * [docker](docker/) - Dockerfiles used to create Docker images.
 * [oracle](oracle/) - Set up and start up scripts for Oracle Database.
 * [web](web/) - Website content.
-  * [**migrations**](web/migrations/) - SQL migrations. These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.  Migrations will run in ascending order based on filename (`000-xxx`, `001-xxx`, `002-xxx`, ...).  Make sure to **not** have a semicolon at the end of a statement.
+  * [**migrations**](web/migrations/) - SQL migrations.
+
+    These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.  Migrations will run in ascending order based on filename (`000-xxx`, `001-xxx`, `002-xxx`, ...). Make sure SQL statements **do not** end with a semicolon (`;`) and PL/SQL statements **do** end with a semicolon.
+
   * [**public**](web/public/) - The root directory of the publicly accessible web server. Avoid storing private information or keys here.
   * [**sql**](web/sql/) - SQL queries for modifying table data.
 
-    If multiple queries are required per file, wrap all statements in an anonymous PL/SQL block:
+    If multiple queries are required per file, wrap all statements in an anonymous PL/SQL block.  Follow the end semicolon usage as above in migrations, otherwise statements will produce errors on execution.
 
     ```sql
     BEGIN
         INSERT INTO tbl VALUES (1, 'uwu');
         INSERT INTO tbl VALUES (2, 'whats');
         INSERT INTO tbl VALUES (3, 'this');
-    END
+    END;
     ```
 
   * [**src**](web/src/) - Source code of the web application.  Private information can be stored here.
