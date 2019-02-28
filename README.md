@@ -55,6 +55,8 @@ Usage: ./setup.sh [-doemh]
 
 If you are manually downloading the Oracle Database binaries, download them to the root directory in this repository then run the script with the `-m` flag.  Do not unzip the file.
 
+If passing the `-e` flag to read authentication options from environment variables, set the following environment variables before executing the script: `ORACLE_BIN_PWD` (Binary download password), `ORACLE_USR`, `ORACLE_PWD` (Desired database username and password).
+
 ## Manual Installation
 
 ### Prerequisites
@@ -143,8 +145,20 @@ Bolded directories are where the important logic of the application is located.
 * [docker](docker/) - Dockerfiles used to create Docker images.
 * [oracle](oracle/) - Set up and start up scripts for Oracle Database.
 * [web](web/) - Website content.
-  * [**migrations**](web/migrations/) - SQL migrations. These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.  Migrations will run in ascending order based on filename (`000-xxx`, `001-xxx`, `002-xxx`, ...).
+  * [**migrations**](web/migrations/) - SQL migrations. These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.  Migrations will run in ascending order based on filename (`000-xxx`, `001-xxx`, `002-xxx`, ...).  Make sure to **not** have a semicolon at the end of a statement.
   * [**public**](web/public/) - The root directory of the publicly accessible web server. Avoid storing private information or keys here.
+  * [**sql**](web/sql/) - SQL queries for modifying table data.
+
+    If multiple queries are required per file, wrap all statements in an anonymous PL/SQL block:
+
+    ```sql
+    BEGIN
+        INSERT INTO tbl VALUES (1, 'uwu');
+        INSERT INTO tbl VALUES (2, 'whats');
+        INSERT INTO tbl VALUES (3, 'this');
+    END;
+    ```
+
   * [**src**](web/src/) - Source code of the web application.  Private information can be stored here.
   * [**tests**](web/tests/) - PHP unit tests.
   * [.env.example](web/.env.example) - Example environment file for database authentication options. The file that will actually be used is `.env` in the same directory.
