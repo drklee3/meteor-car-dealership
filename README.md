@@ -156,7 +156,7 @@ Bolded directories are where the important logic of the application is located.
         INSERT INTO tbl VALUES (1, 'uwu');
         INSERT INTO tbl VALUES (2, 'whats');
         INSERT INTO tbl VALUES (3, 'this');
-    END;
+    END
     ```
 
   * [**src**](web/src/) - Source code of the web application.  Private information can be stored here.
