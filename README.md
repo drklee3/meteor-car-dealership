@@ -143,7 +143,7 @@ Bolded directories are where the important logic of the application is located.
 * [docker](docker/) - Dockerfiles used to create Docker images.
 * [oracle](oracle/) - Set up and start up scripts for Oracle Database.
 * [web](web/) - Website content.
-  * [**migrations**](web/migrations/) - SQL migrations. These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.
+  * [**migrations**](web/migrations/) - SQL migrations. These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.  Migrations will run in ascending order based on filename (`000-xxx`, `001-xxx`, `002-xxx`, ...).
   * [**public**](web/public/) - The root directory of the publicly accessible web server. Avoid storing private information or keys here.
   * [**src**](web/src/) - Source code of the web application.  Private information can be stored here.
   * [**tests**](web/tests/) - PHP unit tests.
@@ -233,6 +233,7 @@ Either phone, email or both have to be given
 | ----------- | ------- | ----------- |
 | job_id      | NUMBER  | PRIMARY KEY |
 | mechanic_id | NUMBER  | NOT NULL    |
+| car_id      | VARCHAR | FOREIGN KEY |
 
 ### Employees
 
