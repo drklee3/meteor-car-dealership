@@ -40,7 +40,8 @@ install_docker() {
     echo "Adding you to the Docker group"
     # add self to docker group
     sudo groupadd docker
-    sudo usermod -aG docker $USER
+    # use gpasswd to not require logout
+    sudo gpasswd -a $USER docker
 }
 
 build_oracle() {
@@ -79,7 +80,7 @@ build_oracle() {
 }
 
 usage() {
-  echo "Usage: $0 [-dh]"
+  echo "Usage: $0 [-deomh]"
   echo "  -d          skip installation of Docker and Docker Compose"
   echo "  -e          read authentication options from environment"
   echo "  -o          skip build of Oracle Docker image"
