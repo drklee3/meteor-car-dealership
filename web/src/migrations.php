@@ -108,8 +108,11 @@
                 // add query to history file
                 $this->history[] = $mig;
             }
-
-            $this->save_migrations();
+            
+            // save migrations only if there were new ones run
+            if (!empty($pending_migrations)) {
+                $this->save_migrations();
+            }
         }
 
         /**
