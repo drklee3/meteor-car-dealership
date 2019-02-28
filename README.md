@@ -45,7 +45,7 @@ chmod +x setup.sh
 ```
 
 ```text
-Usage: ./setup.sh [-dh]
+Usage: ./setup.sh [-doemh]
   -d          skip installation of Docker and Docker Compose
   -o          skip build of Oracle Docker image
   -e          read authentication options from environment
