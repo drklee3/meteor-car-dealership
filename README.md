@@ -12,6 +12,26 @@ Final project for COEN 178 (Intro to Database Systems).  This application is des
 
 Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PLSQL procedure or function and at least one trigger.
 
+## Table of Contents
+
+* [meteor-car-dealership](#meteor-car-dealership)
+  * [Table of Contents](#table-of-contents)
+  * [Installation (Script)](#installation-script)
+  * [Manual Installation](#manual-installation)
+    * [Prerequisites](#prerequisites)
+    * [Installation (Manual)](#installation-manual)
+  * [Project Layout](#project-layout)
+    * [Directory / File Structure](#directory--file-structure)
+  * [Troubleshooting](#troubleshooting)
+  * [Testing](#testing)
+  * [Back Up / Restore Database](#back-up--restore-database)
+  * [Schema](#schema)
+    * [Cars](#cars)
+    * [Problems](#problems)
+    * [Customers](#customers)
+    * [Repair Jobs](#repair-jobs)
+    * [Employees](#employees)
+
 ## Installation (Script)
 
 You can install the prerequisites listed above along with required dependencies with the provided `setup.sh` script.  You need to input a desired login username and password for the database after installation finishes.  You can skip certain steps by passing the corresponding flags.
