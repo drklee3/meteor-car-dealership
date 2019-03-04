@@ -25,12 +25,10 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
   * [Troubleshooting](#troubleshooting)
   * [Testing](#testing)
   * [Back Up / Restore Database](#back-up--restore-database)
-  * [Schema](#schema)
-    * [Cars](#cars)
-    * [Problems](#problems)
-    * [Customers](#customers)
-    * [Repair Jobs](#repair-jobs)
-    * [Employees](#employees)
+  * [ER models](#er-models)
+    * [Crows Foot Notation](#crows-foot-notation)
+    * [Textbook Notation](#textbook-notation)
+    * [UML Notation](#uml-notation)
 
 ## Installation (Script)
 
@@ -150,7 +148,7 @@ Bolded directories are where the important logic of the application is located.
     These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.  Migrations will run in ascending order based on filename (`000-xxx`, `001-xxx`, `002-xxx`, ...). Make sure SQL statements **do not** end with a semicolon (`;`) and PL/SQL statements **do** end with a semicolon.
 
   * [**public**](web/public/) - The root directory of the publicly accessible web server. Avoid storing private information or keys here.
-  * [**sql**](web/sql/) - SQL queries for modifying table data.
+  * [**sql**](web/sql/) - SQL queries for fetching/modifying table data.
 
     If multiple queries are required per file, wrap all statements in an anonymous PL/SQL block.  Follow the end semicolon usage as above in migrations, otherwise statements will produce errors on execution.
 
@@ -215,48 +213,16 @@ docker-compose down
 docker volume rm meteor-car-dealership_db-data
 ```
 
-## Schema
+## ER models
 
-### Cars
+### Crows Foot Notation
 
-Either phone, email or both have to be given
+![Crows Foot Notation](images/crows_foot.png)
 
-| Field          | Type    | Constraint  |
-| -------------- | ------- | ----------- |
-| license_number | VARCHAR | PRIMARY KEY |
-| model          | VARCHAR | NOT NULL    |
-| phone          | VARCHAR |             |
-| email          | VARCHAR |             |
+### Textbook Notation
 
-### Problems
+![Textbook Notation](images/textbook.png)
 
-| Field        | Type    | Constraint  |
-| ------------ | ------- | ----------- |
-| problem_type | VARCHAR | NOT NULL    |
-| problem_id   | NUMBER  | PRIMARY KEY |
+### UML Notation
 
-### Customers
-
-| Field   | Type    | Constraint |
-| ------- | ------- | ---------- |
-| name    | VARCHAR | NOT NULL   |
-| phone   | VARCHAR | UNIQUE     |
-| email   | VARCHAR | UNIQUE     |
-| address | VARCHAR | UNIQUE     |
-
-### Repair Jobs
-
-| Field       | Type    | Constraint  |
-| ----------- | ------- | ----------- |
-| job_id      | NUMBER  | PRIMARY KEY |
-| mechanic_id | NUMBER  | NOT NULL    |
-| car_id      | VARCHAR | FOREIGN KEY |
-
-### Employees
-
-| Field       | Type    | Constraint  |
-| ----------- | ------- | ----------- |
-| employee_id | NUMBER  | PRIMARY KEY |
-| name        | VARCHAR | NOT NULL    |
-| phone       | VARCHAR | NOT NULL    |
-| hourly_pay  | NUMBER  | NOT NULL    |
+![UML Notation](images/uml.png)
