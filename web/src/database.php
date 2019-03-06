@@ -68,7 +68,8 @@
                 throw new Exception("Error running migrations: " . $e["message"]);
             }
 
-            $nrows = oci_fetch_all($stid, $rows);
+            // The outer array will contain one sub-array per query row.
+            $nrows = oci_fetch_all($stid, $rows, null, null, OCI_FETCHSTATEMENT_BY_ROW);
 
             return array($nrows, $rows);
         }
