@@ -69,7 +69,8 @@
             }
 
             // The outer array will contain one sub-array per query row.
-            $nrows = oci_fetch_all($stid, $rows, null, null, OCI_FETCHSTATEMENT_BY_ROW);
+            // statement, output, skip, maxrows, flags
+            $nrows = oci_fetch_all($stid, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
             return array($nrows, $rows);
         }
