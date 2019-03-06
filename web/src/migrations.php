@@ -77,8 +77,6 @@
             if (!$this->files) {
                 throw new DirReadException("Failed to list migrations");
             }
-
-            echo json_encode($this->files);
         }
 
         /**

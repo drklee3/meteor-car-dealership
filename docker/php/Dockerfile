@@ -23,5 +23,8 @@ RUN phpize && \
     make && \
     make install && \
     echo extension=pdo_oci.so > /usr/local/etc/php/conf.d/pdo_oci.ini && \
-php -v && \
-php -m
+    php -v && \
+    php -m
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
+    sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" "$PHP_INI_DIR/php.ini"

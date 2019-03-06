@@ -1,3 +1,2 @@
 <?php
-    include "../src/index.php";
-?>
+    require_once __DIR__ . "/../src/index.php";
