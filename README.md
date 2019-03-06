@@ -11,6 +11,7 @@ Final project for COEN 178 (Intro to Database Systems).  This application is des
 * All the information in the database helps the management assess their monthly and yearly revenues.
 
 Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PLSQL procedure or function and at least one trigger.
+[Full instructions](COEN178.project.winter.2019.pdf)
 
 ## Table of Contents
 
