@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ORACLE_BIN_URL="https://meteor.drklee.me/protected/oracle-xe-11.2.0-1.0.x86_64.rpm.zip"
+ORACLE_BIN_URL="https://meteor.dlee.dev/protected/oracle-xe-11.2.0-1.0.x86_64.rpm.zip"
 SHOULD_INSTALL_DOCKER="true"
 SHOULD_BUILD_ORACLE="true"
 AUTH_FROM_ENV="false"
