@@ -22,14 +22,17 @@
          */
         function __call(string $name, array $args): void {
             // 404
-            if ($name == "not_found" && count($args) == 1) {
+            if ($name == "not_found") {
                 // $args[0] == method in this case
                 $this->not_found = $args[0];
                 return;
             }
 
+            // push a null at end to prevent undefined offset error
+            $args[] = null;
+
             // destructure arguments
-            list($route, $method) = $args;
+            list($route, $method, $content_type) = $args;
 
             // check if method is supported
             if(!in_array(strtoupper($name), $this->supportedHttpMethods)) {
@@ -37,7 +40,7 @@
             }
 
             // assign method[route] = function
-            $this->{strtolower($name)}[$this->formatRoute($route)] = $method;
+            $this->{strtolower($name)}[$this->formatRoute($route)] = array($method, $content_type);
         }
 
         /**
@@ -82,6 +85,16 @@
             echo call_user_func_array($this->not_found, array($this->request));
         }
 
+        /**
+         * Sets the content type for the response
+         *
+         * @param string $content_type
+         * @return void
+         */
+        private function set_content_type(string $content_type): void {
+            header("Content-Type: " . $content_type);
+        }
+
         
         /**
          * Resolves the request to the corresponding path
@@ -97,13 +110,17 @@
             $method_dict = $this->$req_method;
             $formatted_route = $this->formatRoute($this->request->request_uri);
 
-            if (!isset($method_dict, $formatted_route)) {
+            if (!isset($method_dict[$formatted_route])) {
                 $this->defaultRequestHandler();
                 return;
             }
 
             // get the method from route
-            $method = $method_dict[$formatted_route];
+            list($method, $content_type) = $method_dict[$formatted_route];
+
+            if ($content_type !== null) {
+                $this->set_content_type($content_type);
+            }
 
             // run the function and echo response
             echo call_user_func_array($method, array($this->request));
