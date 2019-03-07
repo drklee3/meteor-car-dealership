@@ -15,21 +15,21 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
 
 ## Table of Contents
 
-- [meteor-car-dealership](#meteor-car-dealership)
-  - [Table of Contents](#table-of-contents)
-  - [Installation (Script)](#installation-script)
-  - [Manual Installation](#manual-installation)
-    - [Prerequisites](#prerequisites)
-    - [Installation (Manual)](#installation-manual)
-  - [Project Layout](#project-layout)
-    - [Directory / File Structure](#directory--file-structure)
-  - [Troubleshooting](#troubleshooting)
-  - [Testing](#testing)
-  - [Back Up / Restore Database](#back-up--restore-database)
-  - [ER models](#er-models)
-    - [Crows Foot Notation](#crows-foot-notation)
-    - [Textbook Notation](#textbook-notation)
-    - [UML Notation](#uml-notation)
+* [meteor-car-dealership](#meteor-car-dealership)
+  * [Table of Contents](#table-of-contents)
+  * [Installation (Script)](#installation-script)
+  * [Manual Installation](#manual-installation)
+    * [Prerequisites](#prerequisites)
+    * [Installation (Manual)](#installation-manual)
+  * [Project Layout](#project-layout)
+    * [Directory / File Structure](#directory--file-structure)
+  * [Troubleshooting](#troubleshooting)
+  * [Testing](#testing)
+  * [Back Up / Restore Database](#back-up--restore-database)
+  * [ER models](#er-models)
+    * [Crows Foot Notation](#crows-foot-notation)
+    * [Textbook Notation](#textbook-notation)
+    * [UML Notation](#uml-notation)
 
 ## Installation (Script)
 
@@ -139,7 +139,7 @@ This application uses the following technologies.
 
 Back-End: [Docker](https://www.docker.com/) (OS level virtualization / containerization), [nginx](https://nginx.org/en/) (HTTP server), [PHP-FPM](https://php-fpm.org/) (FastCGI Process Manager for PHP), [composer](https://getcomposer.org/) (Dependency Manager for PHP), [Oracle Database XE](https://www.oracle.com/database/technologies/appdev/xe.html) (a database duh).
 
-Front-End: [React](https://reactjs.org/) (JavaScript library for user interfaces), [TypeSCript](https://www.typescriptlang.org/) (superset of JavaScript with static typing, compiles to JS), [Sass](https://sass-lang.com/) (extension of CSS, compiles to CSS), [Bulma](https://bulma.io/) (SASS/CSS framework based on Flexbox).
+Front-End: [React](https://reactjs.org/) (JavaScript library for user interfaces), [TypeScript](https://www.typescriptlang.org/) (superset of JavaScript with static typing, compiles to JS), [Sass](https://sass-lang.com/) (extension of CSS, compiles to CSS), [Bulma](https://bulma.io/) (SASS/CSS framework based on Flexbox).
 
 ### Directory / File Structure
 
