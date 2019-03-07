@@ -2,15 +2,24 @@
     declare(strict_types = 1);
 
     class Router {
+        // request data
         private $request;
+        
+        // base url for router, default ""
+        private $base_url;
+        
+        // method when route not found
         private $not_found;
+        
+        // methods that are allowed to be used
         private $supportedHttpMethods = array(
             "GET",
             "POST",
         );
 
-        function __construct(IRequest $request) {
+        function __construct(IRequest $request, string $base_url = "") {
             $this->request = $request;
+            $this->base_url = $base_url;
         }
         
         /**
@@ -40,7 +49,7 @@
             }
 
             // assign method[route] = function
-            $this->{strtolower($name)}[$this->formatRoute($route)] = array($method, $content_type);
+            $this->{strtolower($name)}[$this->formatRoute($route, true)] = array($method, $content_type);
         }
 
         /**
@@ -49,12 +58,16 @@
          * @param string  $route
          * @return string trimmed route
          */
-        private function formatRoute(string $route): string {
-            $result = rtrim($route, '/');
+        private function formatRoute(string $route, bool $prepend_base): string {
+            // add base url
+            if ($prepend_base) {
+                $route = $this->base_url . $route;
+            }
+            $result = rtrim($route, "/");
 
             // root path
-            if ($result === '') {
-                return '/';
+            if ($result === "") {
+                return "/";
             }
 
             return $result;
@@ -108,7 +121,9 @@
                 return;
             }
             $method_dict = $this->$req_method;
-            $formatted_route = $this->formatRoute($this->request->request_uri);
+            $formatted_route = $this->formatRoute($this->request->request_uri, false);
+
+            error_log($formatted_route);
 
             if (!isset($method_dict[$formatted_route])) {
                 $this->defaultRequestHandler();

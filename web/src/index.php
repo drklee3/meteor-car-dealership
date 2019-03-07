@@ -25,8 +25,8 @@
 
     error_log("test error");
 
-    // run router
-    $router = new Router(new Request);
+    // run router on url /api/*
+    $router = new Router(new Request, "/api");
 
     $router->get("/", function () {
         return "<p>Hello world</p>";
