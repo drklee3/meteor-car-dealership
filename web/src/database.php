@@ -83,7 +83,7 @@
                     // oci_bind_by_name($stid, $key, $val) does not work
                     // because it binds each placeholder to the same location: $val
                     // instead use the actual location of the data: $ba[$key]
-                    oci_bind_by_name($stid, $placeholder, $binds[$value]);
+                    oci_bind_by_name($stid, $placeholder, $binds[$placeholder]);
                 }
             }
 

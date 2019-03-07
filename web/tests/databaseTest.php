@@ -54,8 +54,7 @@
             // get the values back
             $sql = "SELECT * FROM testing123";
             $res = $this->db->get_results($sql);
-            $nrows = $res[0];
-            $rows = $res[1];
+            list($nrows, $rows) = $res;
 
             echo json_encode($res);
 
@@ -68,9 +67,43 @@
         }
 
         /**
-         * Undocumented function
+         * @depends testExecuteCreateTable
+         */
+        public function testInsertIntoTableFile() {
+            $exec_path = __DIR__ . "/sql/test_exec.sql";
+            $binds = array(
+                ":val1" => "200",
+                ":val2" => "300",
+                ":val3" => "400",
+            );
+
+            $this->db->execute_file($exec_path, $binds);
+
+            $select_path = __DIR__ . "/sql/test_select.sql";
+            $binds = array(":search" => 300);
+
+            // get the values back
+            $sql = "SELECT * FROM testing123";
+            $res = $this->db->get_results($sql);
+            list($nrows, $rows) = $res;
+
+            // added 3 more rows
+            $this->assertEquals($nrows, 6);
+
+            $res = $this->db->get_results_file($select_path, $binds);
+            list($nrows, $rows) = $res;
+
+            $this->assertEquals($nrows, 1);
+            $this->assertEquals($rows, [
+                ["VAL" => "300"]
+            ]);
+        }
+
+        /**
+         * Drops the testing table
          *
          * @depends testInsertIntoTable
+         * @depends testInsertIntoTableFile
          */
         public function testDropTable(): void {
             $sql = "DROP TABLE testing123";
