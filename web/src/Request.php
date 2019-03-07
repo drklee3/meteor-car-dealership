@@ -1,7 +1,7 @@
 <?php
     declare(strict_types = 1);
 
-    include_once 'IRequest.php';
+    include_once "IRequest.php";
 
     class Request implements IRequest {
         function __construct() {
