@@ -72,9 +72,9 @@
         public function testInsertIntoTableFile() {
             $exec_path = __DIR__ . "/sql/test_exec.sql";
             $binds = array(
-                ":val1" => "200",
-                ":val2" => "300",
-                ":val3" => "400",
+                ":val1" => 200,
+                ":val2" => 300,
+                ":val3" => 400,
             );
 
             $this->db->execute_file($exec_path, $binds);
