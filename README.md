@@ -15,21 +15,21 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
 
 ## Table of Contents
 
-* [meteor-car-dealership](#meteor-car-dealership)
-  * [Table of Contents](#table-of-contents)
-  * [Installation (Script)](#installation-script)
-  * [Manual Installation](#manual-installation)
-    * [Prerequisites](#prerequisites)
-    * [Installation (Manual)](#installation-manual)
-  * [Project Layout](#project-layout)
-    * [Directory / File Structure](#directory--file-structure)
-  * [Troubleshooting](#troubleshooting)
-  * [Testing](#testing)
-  * [Back Up / Restore Database](#back-up--restore-database)
-  * [ER models](#er-models)
-    * [Crows Foot Notation](#crows-foot-notation)
-    * [Textbook Notation](#textbook-notation)
-    * [UML Notation](#uml-notation)
+- [meteor-car-dealership](#meteor-car-dealership)
+  - [Table of Contents](#table-of-contents)
+  - [Installation (Script)](#installation-script)
+  - [Manual Installation](#manual-installation)
+    - [Prerequisites](#prerequisites)
+    - [Installation (Manual)](#installation-manual)
+  - [Project Layout](#project-layout)
+    - [Directory / File Structure](#directory--file-structure)
+  - [Troubleshooting](#troubleshooting)
+  - [Testing](#testing)
+  - [Back Up / Restore Database](#back-up--restore-database)
+  - [ER models](#er-models)
+    - [Crows Foot Notation](#crows-foot-notation)
+    - [Textbook Notation](#textbook-notation)
+    - [UML Notation](#uml-notation)
 
 ## Installation (Script)
 
@@ -135,7 +135,11 @@ You will need to download and install the following prerequisites.
 
 ## Project Layout
 
-This application uses the following technologies: [Docker](https://www.docker.com/) (OS level virtualization / containerization), [nginx](https://nginx.org/en/) (HTTP server), [PHP-FPM](https://php-fpm.org/) (FastCGI Process Manager for PHP), [composer](https://getcomposer.org/) (Dependency Manager for PHP), [Oracle Database XE](https://www.oracle.com/database/technologies/appdev/xe.html) (a database duh).
+This application uses the following technologies.
+
+Back-End: [Docker](https://www.docker.com/) (OS level virtualization / containerization), [nginx](https://nginx.org/en/) (HTTP server), [PHP-FPM](https://php-fpm.org/) (FastCGI Process Manager for PHP), [composer](https://getcomposer.org/) (Dependency Manager for PHP), [Oracle Database XE](https://www.oracle.com/database/technologies/appdev/xe.html) (a database duh).
+
+Front-End: [React](https://reactjs.org/) (JavaScript library for user interfaces), [TypeSCript](https://www.typescriptlang.org/) (superset of JavaScript with static typing, compiles to JS), [Sass](https://sass-lang.com/) (extension of CSS, compiles to CSS), [Bulma](https://bulma.io/) (SASS/CSS framework based on Flexbox).
 
 ### Directory / File Structure
 
@@ -144,6 +148,7 @@ Bolded directories are where the important logic of the application is located.
 * [docker](docker/) - Dockerfiles used to create Docker images.
 * [oracle](oracle/) - Set up and start up scripts for Oracle Database.
 * [web](web/) - Website content.
+  * [**app**](web/app/) - Front end application.
   * [**migrations**](web/migrations/) - SQL migrations.
 
     These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.  Migrations will run in ascending order based on filename (`000-xxx`, `001-xxx`, `002-xxx`, ...). Make sure SQL statements **do not** end with a semicolon (`;`) and PL/SQL statements **do** end with a semicolon.
