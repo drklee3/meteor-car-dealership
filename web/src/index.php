@@ -1,32 +1,93 @@
 <?php
     declare(strict_types = 1);
 
-    require_once "../vendor/autoload.php";
-    require_once "migrations.php";
-    require_once "database.php";
+    # dependencies
+    include_once __DIR__ . "/../vendor/autoload.php";
 
-    include_once "Request.php";
-    include_once "Router.php";
+    # other stuff
+    include_once __DIR__ . "/Database.php";
+    include_once __DIR__ . "/Migrations.php";
+    include_once __DIR__ . "/Request.php";
+    include_once __DIR__ . "/Router.php";
+    include_once __DIR__ . "/Routes.php";
 
     // error logging
-    error_reporting(E_ALL);                          // Error engine - always ON!
-    ini_set("ignore_repeated_errors", "1");          // always ON
-    ini_set("log_errors", "1");                      // Error logging
+    error_reporting(E_ALL);
+    ini_set("ignore_repeated_errors", "1");
+    ini_set("log_errors", "1");
+    
 
     // run migrations
     $mig = new Migrations("../migrations/", "../.migrations");
-    $db = new Database;
+    $db  = new Database();
     try {
         $mig->start($db);
     } catch (Exception $e) {
         error_log("Error running migrations" . $e);
-        echo "Error running migrations: " . $e;
+        $err = array(
+            "error" => "Failed to connect to database",
+        );
+        header("HTTP/1.1 500 Internal Server Error");
+        echo json_encode($err, JSON_PRETTY_PRINT);
+        return;
     }
 
-    error_log("test error");
+    // get current request (post data etc)
+    $req = new Request();
+    // read routes from file
+    $routes = new Routes(__DIR__ . "/routes.json");
+    // router on base url /api/*
+    $router = new Router($req, "/api");
 
-    // run router on url /api/*
-    $router = new Router(new Request, "/api");
+    $routes_list = $routes->get_routes();
+
+    // build routes from file
+    foreach ($routes_list as $path => $values) {
+        error_log(json_encode($values, JSON_PRETTY_PRINT));
+        list($method, $query_type, $file) = $values;
+        $file_path = __DIR__ . "/../sql/" . $file;
+
+        $func = function () use ($db, $query_type, $file_path, $req) {
+            $msg = null;
+
+
+            try {
+                // try running the query
+                $res = $db->run_query($query_type, $file_path, $req);
+
+                // no response
+                if ($res === null) {
+                    // give succ message
+                    $msg = array("result" => "success");
+                } else {
+                    // has response
+                    list($nrows, $rows) = $res;
+                    // give data
+                    $msg = array(
+                        "result" => "success",
+                        "num_rows" => $nrows,
+                        "rows" => $rows,
+                    );
+                }
+
+            } catch (Exception $e) {
+                // had an oopsies, give error
+                $msg = array(
+                    "result" => "error",
+                    "message" => $e,
+                );
+            }
+
+            // respond in json
+            return json_encode($msg, JSON_PRETTY_PRINT);
+        };
+
+        call_user_func_array(
+            array($router, strtolower($method)),
+            // i guess rn it's all json responses
+            array($path, $func, "application/json"),
+        );
+    }
 
     $router->get("/", function () {
         return "<p>Hello world</p>";

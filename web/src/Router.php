@@ -1,7 +1,10 @@
 <?php
     declare(strict_types = 1);
 
-    class Router {
+    include_once __DIR__ . "/IRouter.php";
+
+
+    class Router implements IRouter {
         // request data
         private $request;
         

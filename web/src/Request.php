@@ -1,7 +1,7 @@
 <?php
     declare(strict_types = 1);
 
-    include_once "IRequest.php";
+    include_once __DIR__ . "/IRequest.php";
 
     class Request implements IRequest {
         function __construct() {
@@ -30,5 +30,15 @@
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
             return $body;
+        }
+
+        /**
+         * Fetch bind variables array from request body
+         *
+         * @return array
+         */
+        public function get_bind_variables(): ?array {
+            $body = $this->get_body();
+            return $body["binds"];
         }
     }

@@ -1,9 +1,6 @@
 <?php
     declare(strict_types = 1);
 
-    class DirReadException extends Exception {
-    }
-
     class Migrations {
         // path to migrations directory
         private $migrations_path;
@@ -75,7 +72,7 @@
 
             // invalid path
             if (!$this->files) {
-                throw new DirReadException("Failed to list migrations");
+                throw new Exception("Failed to list migrations");
             }
         }
 

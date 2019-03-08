@@ -1,0 +1,24 @@
+{
+    "__EXAMPLE_FORMAT": [
+        "GET || POST",
+        "execute || get_results",
+        "sqlfile.sql"
+    ],
+
+    "/oneplusone": [
+        "GET",
+        "get_results",
+        "one_plus_one.sql"
+    ],
+
+    "/new_repair_job": [
+        "POST",
+        "execute",
+        "insert_repair_jobs.sql"
+    ],
+    "/get_repair_job": [
+        "GET",
+        "get_results",
+        "select_repair_jobs.sql"
+    ]
+}

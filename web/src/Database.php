@@ -1,6 +1,8 @@
 <?php
-	declare(strict_types = 1);
+    declare(strict_types = 1);
+
     require_once __DIR__ . "/../vendor/autoload.php";
+    require_once __DIR__ . "/Util.php";
 
     interface IDatabase {
         public function get_connection();
@@ -14,7 +16,7 @@
     class Database implements IDatabase {
 		function __construct() {
 			$dotenv = Dotenv\Dotenv::create(__DIR__ . "/../");
-			$dotenv->load();
+            $dotenv->load();
 		}
         
         /**
@@ -35,30 +37,6 @@
 			}
 
 			return $conn;
-        }
-
-        /**
-         * Reads file content
-         *
-         * @param  string $file_path Path to file to read
-         * @return string file content 
-         */
-        private function read_file(string $file_path): string {
-            if (!file_exists($file_path)) {
-                error_log("Invalid SQL exection file: " . $file_path);
-                throw new Exception("Failed to find query");
-            }
-
-            $sql = file_get_contents($file_path);
-
-            // empty strings should be falsy too i guess?
-            // if problem reading file or empty file
-            if ($sql === false || $sql === "") {
-                error_log("Failed to read SQL file: " . $file_path);
-                throw new Exception("Failed to read query");
-            }
-
-            return $sql;
         }
 
         /**
@@ -127,7 +105,7 @@
          * @return void
          */
         public function execute_file(string $file_path, array $binds = null): void {
-            $sql = $this->read_file($file_path);
+            $sql = read_file($file_path);
             $this->execute($sql, $binds);
         }
         
@@ -150,8 +128,32 @@
          * @return array [# of returned rows, rows]
          */
         public function get_results_file(string $file_path, array $binds = null): array {
-            $sql = $this->read_file($file_path);
+            $sql = read_file($file_path);
             return $this->get_results($sql, $binds);
         }
+
+        /**
+         * Runs a query from type to file
+         *
+         * @param string $type "get_results" || "execute"
+         * @param string $file SQL file
+         * @return array|null
+         */
+        public function run_query(string $type, string $file_path, IRequest $req = null): ?array {
+            if ($req !== null) {
+                $binds = $req->get_bind_variables();
+            }
+
+            // run results
+            if ($type === "get_results") {
+                return $this->get_results_file($file_path, $binds);
+            }
+
+            if ($type === "execute") {
+                $this->execute_file($file_path, $binds);
+                return null;
+            }
+
+            error_log("Invalid query type");
+        }
 	}
-?>
