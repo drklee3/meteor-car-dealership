@@ -32,7 +32,7 @@
          * @param array  $args Arguments
          * @return void
          */
-        function __call(string $name, array $args): void {
+        public function __call(string $name, array $args): void {
             // 404
             if ($name == "not_found") {
                 // $args[0] == method in this case

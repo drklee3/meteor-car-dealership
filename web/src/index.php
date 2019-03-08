@@ -43,10 +43,12 @@
 
     // build routes from file
     foreach ($routes_list as $path => $values) {
-        error_log(json_encode($values, JSON_PRETTY_PRINT));
+        // destructure values array
         list($method, $query_type, $file) = $values;
+        // build absolute file path
         $file_path = __DIR__ . "/../sql/" . $file;
 
+        // closure function, requires variables from parent scope
         $func = function () use ($db, $query_type, $file_path, $req) {
             $msg = null;
 
@@ -82,6 +84,8 @@
             return json_encode($msg, JSON_PRETTY_PRINT);
         };
 
+        // add path to router
+        // equivalent to $router->{$method}($path, $func, "application/json")
         call_user_func_array(
             array($router, strtolower($method)),
             // i guess rn it's all json responses
