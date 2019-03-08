@@ -124,7 +124,7 @@
                 return;
             }
             $method_dict = $this->$req_method;
-            $formatted_route = $this->formatRoute($this->request->request_uri, false);
+            $formatted_route = $this->formatRoute($this->request->get_base_uri(), false);
 
             error_log($formatted_route);
 

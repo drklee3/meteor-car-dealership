@@ -14,6 +14,10 @@
             }
         }
 
+        public function get_base_uri(): string {
+            return strtok($this->request_uri, "?");
+        }
+
         /**
          * Gets the body for a request
          *

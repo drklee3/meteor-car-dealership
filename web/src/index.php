@@ -105,6 +105,10 @@
         return json_encode($_SERVER, JSON_PRETTY_PRINT);
     }, "application/json");
 
+    $router->get("/request", function ($request) {
+        return json_encode($_REQUEST, JSON_PRETTY_PRINT);
+    }, "application/json");
+
     $router->post("/data", function ($request) {
         return json_encode($request->get_body(), JSON_PRETTY_PRINT);
     }, "application/json");
