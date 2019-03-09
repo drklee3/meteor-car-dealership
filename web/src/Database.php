@@ -70,8 +70,9 @@
 
             $stid = oci_parse($conn, $sql);
 
+            // basic validation of binds based on count
             if (!$this->binds_valid($sql, $binds)) {
-                throw new Exception("Binds and placeholders do not match");
+                throw new Exception("Binds and placeholders counts do not match");
             }
 
             // bind parameters
