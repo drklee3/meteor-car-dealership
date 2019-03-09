@@ -1,13 +1,17 @@
 <?php
     declare(strict_types = 1);
 
+    use PHPUnit\Framework\Error\Warning;
+
+    include_once __DIR__ . "/../src/Database.php";
+
     use PHPUnit\Framework\TestCase;
 
     final class databaseTest extends TestCase {
         protected $db;
 
         public function setUp(): void {
-            $this->db = new Database;
+            $this->db = new Database();
         }
 
         protected function onNotSuccessfulTest(Throwable $t): void {
@@ -25,8 +29,6 @@
             $res = $this->db->get_results($sql);
             $nrows = $res[0];
             $rows  = $res[1];
-
-            echo json_encode($res);
 
             $this->assertEquals($nrows, 1);
             $this->assertEquals($rows, [["SUM" => "2"]]);
@@ -55,8 +57,6 @@
             $sql = "SELECT * FROM testing123";
             $res = $this->db->get_results($sql);
             list($nrows, $rows) = $res;
-
-            echo json_encode($res);
 
             $this->assertEquals($nrows, 3);
             $this->assertEquals($rows, [
@@ -100,10 +100,31 @@
         }
 
         /**
+         * Tests that running a query without binds replaced should fail
+         * 
+         * @depends testExecuteCreateTable
+         * @return void
+         */
+        public function testTooManyBinds() {
+            $exec_path = __DIR__ . "/sql/test_exec.sql";
+            $binds = array(
+                ":val1" => 200,
+                ":val2" => 300,
+                ":val3" => 300,
+                ":val4" => 300,
+            );
+
+            $this->expectException(Warning::class);
+            $this->db->execute_file($exec_path, $binds);
+            
+        }
+
+        /**
          * Drops the testing table
          *
          * @depends testInsertIntoTable
          * @depends testInsertIntoTableFile
+         * @depends testTooManyBinds
          */
         public function testDropTable(): void {
             $sql = "DROP TABLE testing123";

@@ -61,7 +61,12 @@
                     // oci_bind_by_name($stid, $key, $val) does not work
                     // because it binds each placeholder to the same location: $val
                     // instead use the actual location of the data: $ba[$key]
-                    oci_bind_by_name($stid, $placeholder, $binds[$placeholder]);
+                    $succ = oci_bind_by_name($stid, $placeholder, $binds[$placeholder]);
+
+                    if ($succ === false) {
+                        throw new Exception("Failed to bind placeholder:  $placeholder => "
+                            . $binds[$placeholder]);
+                    }
                 }
             }
 
@@ -81,6 +86,10 @@
             // The outer array will contain one sub-array per query row.
             // statement, output, skip, maxrows, flags
             $nrows = oci_fetch_all($stid, $rows, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
+
+            if ($nrows === false) {
+                throw new Exception("Failed to fetch all rows");
+            }
 
             return array($nrows, $rows);
         }
