@@ -135,12 +135,40 @@
         }
 
         /**
+         * Tests binding an array
+         *
+         * @depends testExecuteCreateTable
+         * @return void
+         */
+        public function testBindArray() {
+            $exec_path = __DIR__ . "/sql/test_array.sql";
+
+            $binds = array(
+                ":numbers" => array(
+                    999,
+                    999,
+                    999,
+                    999,
+                ),
+            );
+
+            $this->db->execute_file($exec_path, $binds);
+            // get the values back
+            $sql = "SELECT * FROM testing123 WHERE val = 999";
+            $res = $this->db->get_results($sql);
+            list($nrows, $rows) = $res;
+
+            $this->assertEquals($nrows, 4);
+        }
+
+        /**
          * Drops the testing table
          *
          * @depends testInsertIntoTable
          * @depends testInsertIntoTableFile
          * @depends testTooFewBinds
          * @depends testTooManyBinds
+         * @depends testBindArray
          */
         public function testDropTable(): void {
             $sql = "DROP TABLE testing123";

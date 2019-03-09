@@ -47,7 +47,7 @@
          * @return bool
          */
         private function binds_valid(string $sql, ?array $binds): bool {
-            $num_matches = preg_match_all("/:(?!new|old)/i", $sql, $_matches);
+            $num_matches = preg_match_all("/:(?!new|old|=)/i", $sql, $_matches);
 
             if ($binds === null) {
                 return $num_matches === 0;
@@ -82,7 +82,18 @@
                     // oci_bind_by_name($stid, $key, $val) does not work
                     // because it binds each placeholder to the same location: $val
                     // instead use the actual location of the data: $ba[$key]
-                    $succ = oci_bind_by_name($stid, $placeholder, $binds[$placeholder]);
+
+                    $succ = false;
+                    
+                    if (is_array($binds[$placeholder])) {
+                        // bind an array
+                        $succ = oci_bind_array_by_name($stid, $placeholder,
+                            $binds[$placeholder], count($binds[$placeholder]),
+                            -1, SQLT_CHR);
+                    } else {
+                        $succ = oci_bind_by_name($stid, $placeholder, $binds[$placeholder]);
+                    }
+
 
                     if ($succ === false) {
                         throw new Exception("Failed to bind placeholder:  $placeholder => "
