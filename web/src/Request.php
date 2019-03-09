@@ -14,6 +14,11 @@
             }
         }
 
+        /**
+         * Gets the base URI without url parameters
+         *
+         * @return string
+         */
         public function get_base_uri(): string {
             return strtok($this->request_uri, "?");
         }
