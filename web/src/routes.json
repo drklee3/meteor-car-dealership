@@ -11,7 +11,7 @@
         "one_plus_one.sql"
     ],
 
-    "/new_repair_job": [
+    "__/new_repair_job": [
         "POST",
         "execute",
         "insert_repair_jobs.sql"

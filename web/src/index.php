@@ -15,7 +15,11 @@
     error_reporting(E_ALL);
     ini_set("ignore_repeated_errors", "1");
     ini_set("log_errors", "1");
-    
+
+    // disable cors protection
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST");
+    header("Access-Control-Allow-Headers: X-Requested-With");
 
     // run migrations
     $mig = new Migrations("../migrations/", "../.migrations");
@@ -92,6 +96,10 @@
             array($path, $func, "application/json"),
         );
     }
+
+    $router->post("/new_repair_job", function () {
+        return json_encode($_POST, JSON_PRETTY_PRINT);
+    });
 
     $router->get("/", function () {
         return "<p>Hello world</p>";
