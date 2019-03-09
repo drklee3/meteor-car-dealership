@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 class Header extends React.Component {
     public render() {
@@ -15,7 +15,7 @@ class Header extends React.Component {
                     </div>
                 </div>
             </section>
-        )
+        );
     }
 }
 
