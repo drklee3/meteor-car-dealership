@@ -40,7 +40,12 @@
         }
 
         /**
-         * Validate if number of binds match the number of placeholders
+         * Validate if number of binds match the number of placeholders.
+         * Does a basic check by counting the number of colons.
+         * Ignores those that are part of the following:
+         * ":=", ":new", ":old"
+         * There may be other cases that colons are used other than in
+         * placeholders so be sure that this method is updated with those cases
          *
          * @param string  $sql   SQL statement
          * @param array   $binds array of binds
