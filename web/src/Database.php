@@ -87,6 +87,10 @@
                     
                     if (is_array($binds[$placeholder])) {
                         // bind an array
+                        // use type varchar2 (SQLT_CHR) since we're getting
+                        // values from post request which are all strings i think
+                        // and oracle apparently does implicit casting from string
+                        // to int/number so it should be okay, "should be"
                         $succ = oci_bind_array_by_name($stid, $placeholder,
                             $binds[$placeholder], count($binds[$placeholder]),
                             -1, SQLT_CHR);
