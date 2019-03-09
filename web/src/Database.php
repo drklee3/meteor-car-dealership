@@ -40,6 +40,23 @@
         }
 
         /**
+         * Validate if number of binds match the number of placeholders
+         *
+         * @param string  $sql   SQL statement
+         * @param array   $binds array of binds
+         * @return bool
+         */
+        private function binds_valid(string $sql, ?array $binds): bool {
+            $num_matches = preg_match_all("/:(?!new|old)/i", $sql, $_matches);
+
+            if ($binds === null) {
+                return $num_matches === 0;
+            }
+
+            return count($binds) === $num_matches;
+        }
+
+        /**
          * Runs SQL statement with optional rows to be returned and optional
          * binding variables
          *
@@ -52,6 +69,10 @@
             $conn = $this->get_connection();
 
             $stid = oci_parse($conn, $sql);
+
+            if (!$this->binds_valid($sql, $binds)) {
+                throw new Exception("Binds and placeholders do not match");
+            }
 
             // bind parameters
             if ($binds !== null && count($binds)) {

@@ -100,6 +100,22 @@
         }
 
         /**
+         * Tests that running a query with binds unreplaced should fail
+         *
+         * @depends testExecuteCreateTable
+         * @return void
+         */
+        public function testTooFewBinds() {
+            $exec_path = __DIR__ . "/sql/test_exec.sql";
+            $binds = array(
+                ":val1" => 200, // just 1 bind ye
+            );
+
+            $this->expectException(Exception::class);
+            $this->db->execute_file($exec_path, $binds);
+        }
+
+        /**
          * Tests that running a query without binds replaced should fail
          * 
          * @depends testExecuteCreateTable
@@ -111,12 +127,11 @@
                 ":val1" => 200,
                 ":val2" => 300,
                 ":val3" => 300,
-                ":val4" => 300,
+                ":val4" => 300, // this ones extra
             );
 
-            $this->expectException(Warning::class);
+            $this->expectException(Exception::class);
             $this->db->execute_file($exec_path, $binds);
-            
         }
 
         /**
@@ -124,6 +139,7 @@
          *
          * @depends testInsertIntoTable
          * @depends testInsertIntoTableFile
+         * @depends testTooFewBinds
          * @depends testTooManyBinds
          */
         public function testDropTable(): void {
