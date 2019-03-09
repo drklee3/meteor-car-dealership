@@ -1,5 +1,6 @@
 import * as React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import * as request from "../request";
 
 const problemState = {problems: 1};
 type State = Readonly<typeof problemState>;
@@ -57,7 +58,7 @@ class Problems extends React.Component {
                             className="input"
                             type="text"
                             placeholder={problemNames[i % problemNames.length]}
-                            name={`[binds][problems][${i}]`}
+                            name={`binds[problems][${i}]`}
                         />
                         <span className="icon is-small is-left">
                             <FontAwesomeIcon icon="question" />
@@ -89,52 +90,94 @@ class Problems extends React.Component {
 }
 
 class RepairJob extends React.Component {
+    private form = React.createRef<HTMLFormElement>();
+
+    constructor(props: any) {
+        super(props);
+    
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    
+    private async handleSubmit(e: React.MouseEvent) {
+        e.preventDefault();
+        const res = await request.new_repair_job(this.form);
+
+        console.log(res);
+    }
+
     public render() {
         return (
             <div className="section">
                 <div className="container">
-                    <h3 className="title is-3">Create a New Repair Job</h3>
-                    <div className="field">
-                        <label className="label">Name</label>
-                        <p className="control is-expanded has-icons-left">
-                            <input className="input" type="text" placeholder="Rosa Parks" />
-                            <span className="icon is-small is-left">
-                                <FontAwesomeIcon icon="user" />
-                            </span>
-                        </p>
-                    </div>
-                    <div className="field-body">
+                    <form className="form" ref={this.form}>
+                        <h3 className="title is-3">Create a New Repair Job</h3>
                         <div className="field">
-                            <label className="label">Email</label>
+                            <label className="label">Name</label>
                             <p className="control is-expanded has-icons-left">
-                                <input className="input is-success" type="email" placeholder="hello@dlee.dev" />
+                                <input
+                                    name="binds[name]"
+                                    className="input"
+                                    type="text"
+                                    placeholder="Rosa Parks"
+                                />
                                 <span className="icon is-small is-left">
-                                    <FontAwesomeIcon icon="envelope" />
+                                    <FontAwesomeIcon icon="user" />
                                 </span>
                             </p>
                         </div>
+                        <div className="field-body">
+                            <div className="field">
+                                <label className="label">Email</label>
+                                <p className="control is-expanded has-icons-left">
+                                    <input
+                                        name="binds[email]"
+                                        className="input is-success"
+                                        type="email"
+                                        placeholder="hello@dlee.dev"
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <FontAwesomeIcon icon="envelope" />
+                                    </span>
+                                </p>
+                            </div>
+                            <div className="field">
+                                <label className="label">Phone Number</label>
+                                <p className="control is-expanded has-icons-left">
+                                    <input
+                                        name="binds[phone]"
+                                        className="input"
+                                        type="tel"
+                                        placeholder="123-456-7890"
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <FontAwesomeIcon icon="phone" />
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
                         <div className="field">
-                            <label className="label">Phone Number</label>
+                            <label className="label">Car Model</label>
                             <p className="control is-expanded has-icons-left">
-                                <input className="input" type="tel" placeholder="123-456-7890" />
+                                <input
+                                    name="binds[model]"
+                                    className="input"
+                                    type="text"
+                                    placeholder="Lexus LFA"
+                                />
                                 <span className="icon is-small is-left">
-                                    <FontAwesomeIcon icon="phone" />
+                                    <FontAwesomeIcon icon="car" />
                                 </span>
                             </p>
                         </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">Car Model</label>
-                        <p className="control is-expanded has-icons-left">
-                            <input className="input" type="text" placeholder="Lexus LFA" />
-                            <span className="icon is-small is-left">
-                                <FontAwesomeIcon icon="car" />
-                            </span>
-                        </p>
-                    </div>
-                    
+                        
 
-                    <Problems />
+                        <Problems />
+
+                        <button className="button is-primary" onClick={this.handleSubmit}>
+                            Submit
+                        </button>
+                    </form>
+                        
                 </div>
            </div>
         );
