@@ -1,6 +1,6 @@
 CREATE TABLE mechanics(
-	empId int(20) PRIMARY KEY,
-	name varchar(40),
-	phone int(20),
-	hourly_Pay int(20)	
+	empId      INT(20) PRIMARY KEY,
+	name       VARCHAR(40),
+	phone      INT(20),
+	hourly_Pay INT(20)	
 )

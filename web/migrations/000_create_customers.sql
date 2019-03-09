@@ -1,6 +1,6 @@
 CREATE TABLE customer (
-	phone int(20) PRIMARY KEY,
-	email varchar(40), 
-	name varchar(40),
-	address varchar(100)
+	phone   INT(20) PRIMARY KEY,
+	email   VARCHAR(40), 
+	name    VARCHAR(40),
+	address VARCHAR(100)
 )
