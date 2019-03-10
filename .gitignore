@@ -3,3 +3,4 @@
 **/create_user.sql
 **/vendor
 **/.phpunit*
+**/.log
