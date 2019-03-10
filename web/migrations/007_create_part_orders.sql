@@ -5,5 +5,5 @@ CREATE TABLE part_orders(
 	CONSTRAINT part_name_fk FOREIGN KEY(part_name)
 		REFERENCES parts(name),
 	CONSTRAINT repair_id_fk FOREIGN KEY(repair_id)
-		REFERENCES repair_job(repair_id)
+		REFERENCES repair_jobs(repair_id)
 )

@@ -3,5 +3,5 @@ CREATE TABLE cars(
 	address      VARCHAR(40) NOT NULL,
 	model        VARCHAR(20) NOT NULL,
 	CONSTRAINT cars_fk FOREIGN KEY(address)
-		REFERENCES customer(address)
+		REFERENCES customers(address)
 )
