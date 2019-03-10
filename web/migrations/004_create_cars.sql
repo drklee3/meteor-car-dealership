@@ -1,6 +1,5 @@
 CREATE TABLE cars (
-	carLicenceNo INT(20) PRIMARY KEY,
-	phone        INT(20) FOREIGN KEY REFERENCES customer(phone),
-	email        VARCHAR(40) FOREIGN KEY REFERENCES customer(email),
-	model        VARCHAR(20)
+	licence_no   INT(20)     PRIMARY KEY,
+	address      VARCHAR(40) FOREIGN KEY REFERENCES customer(address),
+	model        VARCHAR(20) NOT NULL
 )

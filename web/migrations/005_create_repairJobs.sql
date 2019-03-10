@@ -1,7 +1,11 @@
-CREATE table repairJob (
-	problemId    INT(20) PRIMARY KEY,
-	empId        INT(20) FOREIGN KEY REFERENCES mechanics(empId),
-	carLicenceNo INT(20) FOREIGN KEY REFERENCES car(carLicenceNo),
-	timeIn       VARCHAR(10),
-	timeOut      VARCHAR(10)
+CREATE table repair_job (
+	problem_id    INT(20)     PRIMARY KEY,
+	emp_id        INT(20)     FOREIGN KEY REFERENCES mechanics(emp_id),
+	licence_no    INT(20)     FOREIGN KEY REFERENCES car(licence_no),
+	time_in       VARCHAR(10) NOT NULL,
+	time_out      VARCHAR(10)
+
+	CONSTRAINT fk_not_null
+		CHECK (emp_id IS NOT NULL
+			AND licence_no IS NOT NULL)
 )

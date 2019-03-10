@@ -1,5 +1,5 @@
-CREATE TABLE partOrders (
-	partName VARCHAR(20) FOREIGN KEY REFERENCES parts(name),
-	repairId INT(20) FOREIGN KEY REFERENCES repairJob(repairId),
-	quantity INT(20)
+CREATE TABLE part_orders (
+	part_name VARCHAR(20) NOT NULL FOREIGN KEY REFERENCES parts(name),
+	repair_id INT(20) NOT NULL FOREIGN KEY REFERENCES repair_job(repair_id),
+	quantity INT(20) NOT NULL
 )

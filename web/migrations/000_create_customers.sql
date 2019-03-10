@@ -1,6 +1,10 @@
 CREATE TABLE customer (
-	phone   INT(20) PRIMARY KEY,
+	address VARCHAR(100) PRIMARY KEY,
+	phone   INT(20),
 	email   VARCHAR(40), 
-	name    VARCHAR(40),
-	address VARCHAR(100)
+	name    VARCHAR(40) NOT NULL,
+
+	CONSTRAINT phone_or_email
+		CHECK (phone IS NOT NULL
+			OR email IS NOT NULL)
 )
