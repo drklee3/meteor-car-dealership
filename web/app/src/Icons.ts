@@ -2,6 +2,8 @@ import {library} from "@fortawesome/fontawesome-svg-core";
 import {
     faCar,
     faEnvelope,
+    faHashtag,
+    faHome,
     faPhone,
     faUser,
     faQuestion
@@ -10,6 +12,8 @@ import {
 library.add(
     faCar,
     faEnvelope,
+    faHashtag,
+    faHome,
     faPhone,
     faUser,
     faQuestion,

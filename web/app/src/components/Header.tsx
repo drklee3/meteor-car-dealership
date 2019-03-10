@@ -10,7 +10,7 @@ class Header extends React.Component {
                         Meteor Car Dealership
                     </h1>
                     <h2 className="subtitle is-4">
-                        ayy lmao
+                        get your car yeeted into space, on a budget!
                     </h2>
                     </div>
                 </div>
