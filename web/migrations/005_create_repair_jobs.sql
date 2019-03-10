@@ -1,7 +1,7 @@
 CREATE table repair_jobs(
-	repair_id     INT(20)     PRIMARY KEY,
-	emp_id        INT(20)     NOT NULL
-	licence_no    INT(20)     NOT NULL
+	repair_id     INT         PRIMARY KEY,
+	emp_id        INT         NOT NULL
+	licence_no    INT         NOT NULL
 	time_in       VARCHAR(10) NOT NULL,
 	time_out      VARCHAR(10),
 	CONSTRAINT emp_id_fk     FOREIGN KEY(emp_id)

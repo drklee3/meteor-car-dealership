@@ -1,5 +1,5 @@
 CREATE TABLE cars(
-	licence_no   INT(20)     PRIMARY KEY,
+	licence_no   INT         PRIMARY KEY,
 	address      VARCHAR(40) NOT NULL,
 	model        VARCHAR(20) NOT NULL,
 	CONSTRAINT cars_fk FOREIGN KEY(address)
