@@ -1,5 +1,5 @@
 import * as React from "react";
-import {AppAction} from "../App";
+// import {AppAction} from "../App";
 
 class Bill extends React.Component {
     public render() {
