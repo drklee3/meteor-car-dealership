@@ -54,34 +54,22 @@
 
         // closure function, requires variables from parent scope
         $func = function () use ($db, $query_type, $file_path, $req) {
-            $msg = null;
-
+            // default success
+            $msg = array("result" => "success");
 
             try {
                 // try running the query
                 $res = $db->run_query($query_type, $file_path, $req);
 
-                // no response
-                if ($res === null) {
-                    // give succ message
-                    $msg = array("result" => "success");
-                } else {
-                    // has response
-                    list($nrows, $rows) = $res;
-                    // give data
-                    $msg = array(
-                        "result" => "success",
-                        "num_rows" => $nrows,
-                        "rows" => $rows,
-                    );
+                if ($res !== null) {
+                    // has response, destructure into respective fields
+                    list($msg["num_rows"], $msg["rows"]) = $res;
                 }
 
             } catch (Exception $e) {
                 // had an oopsies, give error
-                $msg = array(
-                    "result" => "error",
-                    "message" => $e,
-                );
+                $msg["result"] = "error";
+                $msg["message"] = $e;
             }
 
             // respond in json
