@@ -8,19 +8,23 @@ interface JobListingItem {
     mechanic: string;
 }
 
-type RepairJobListingState = {
+export type RepairJobListingState = {
     repairJobs: JobListingItem[];
     status: "idle" | "loading" | "finished" | "error" | "require_contact";
-    start_date: number;
-    end_date: number;
+    start_date: string;
+    start_time: string;
+    end_date: string;
+    end_time: string;
 };
 
 class RepairJobListing extends React.Component<any, RepairJobListingState> {
     readonly state: RepairJobListingState = {
         repairJobs: [], // initial none
         status: "idle",
-        start_date: 1550620800000,
-        end_date:   1552521600000,
+        start_date: "2019-02-20",
+        start_time: "00:00:00",
+        end_date:   "2019-03-14",
+        end_time: "23:59:59",
     };
 
     private form = React.createRef<HTMLFormElement>();
@@ -29,15 +33,17 @@ class RepairJobListing extends React.Component<any, RepairJobListingState> {
         super(props);
     
         this.handleSubmit      = this.handleSubmit.bind(this);
-        this.handleStartChange = this.handleStartChange.bind(this);
-        this.handleEndChange   = this.handleEndChange.bind(this);
+        this.handleStartDateChange = this.handleStartDateChange.bind(this);
+        this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
+        this.handleEndDateChange   = this.handleEndDateChange.bind(this);
+        this.handleEndTimeChange   = this.handleEndTimeChange.bind(this);
     }
     
     private async handleSubmit(e: React.MouseEvent) {
         e.preventDefault();
         this.setState({status: "loading"});
         try {
-            const res = await request.get_repair_jobs(this.state.start_date, this.state.end_date);
+            const res = await request.get_repair_jobs(this.state);
             // reset the form on submit
             if (this.form.current) {
                 this.form.current.reset();
@@ -53,21 +59,24 @@ class RepairJobListing extends React.Component<any, RepairJobListingState> {
 
     }
 
-    private dateToTimeStamp(e: React.ChangeEvent<HTMLInputElement>): number {
-        const date = new Date(e.target.value);
-        return date.getTime();
+    private handleStartDateChange(e: React.ChangeEvent<HTMLInputElement>) {
+        console.log("start date changed: ", e.target.value);
+        this.setState({start_date: e.target.value});
     }
 
-    private handleStartChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const time = this.dateToTimeStamp(e);
-        console.log("start date changed: ", time);
-        this.setState({start_date: time});
+    private handleStartTimeChange(e: React.ChangeEvent<HTMLInputElement>) {
+        console.log("start time changed: ", e.target.value);
+        this.setState({start_time: e.target.value});
     }
 
-    private handleEndChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const time = this.dateToTimeStamp(e);
-        console.log("end date changed: ", time);
-        this.setState({end_date: time});
+    private handleEndDateChange(e: React.ChangeEvent<HTMLInputElement>) {
+        console.log("end date changed: ", e.target.value);
+        this.setState({end_date: e.target.value});
+    }
+
+    private handleEndTimeChange(e: React.ChangeEvent<HTMLInputElement>) {
+        console.log("end time changed: ", e.target.value);
+        this.setState({end_time: e.target.value});
     }
 
     public render() {
@@ -79,11 +88,17 @@ class RepairJobListing extends React.Component<any, RepairJobListingState> {
                             <label className="label">Start Date</label>
                             <p className="control is-expanded">
                                 <input
-                                    onChange={this.handleStartChange}
+                                    onChange={this.handleStartDateChange}
                                     type="date"
                                     name="binds[start_date]"
                                     required={true}
-                                    value="2019-02-20"
+                                    defaultValue="2019-02-20"
+                                />
+                                <input
+                                    onChange={this.handleStartTimeChange}
+                                    type="time"
+                                    name="binds[start_time]"
+                                    defaultValue="00:00:00"
                                 />
                             </p>
                         </div>
@@ -91,11 +106,17 @@ class RepairJobListing extends React.Component<any, RepairJobListingState> {
                             <label className="label">End Date</label>
                             <p className="control is-expanded">
                                 <input
-                                    onChange={this.handleEndChange}
+                                    onChange={this.handleEndDateChange}
                                     type="date"
                                     name="binds[end_date]"
                                     required={true}
-                                    value="2019-03-14"
+                                    defaultValue="2019-03-14"
+                                />
+                                <input
+                                    onChange={this.handleEndTimeChange}
+                                    type="time"
+                                    name="binds[end_time]"
+                                    defaultValue="23:59:59"
                                 />
                             </p>
                         </div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as React from "react";
 import constants from "./constants";
+import {RepairJobListingState} from "./components/RepairJobListing";
 
 type requestType = "get" | "post";
 
@@ -36,10 +37,10 @@ export function new_repair_job(e: React.RefObject<HTMLFormElement>) {
     return request("post", constants.NEW_REPAIR_JOB, data);
 }
 
-export function get_repair_jobs(start: number, end: number) {
+export function get_repair_jobs(state: RepairJobListingState) {
     const data = new FormData();
-    data.append("binds[start_date]", start.toString());
-    data.append("binds[end_date]", end.toString());
+    data.append("binds[start_date]", `${state.start_date} ${state.start_time}`);
+    data.append("binds[end_date]", `${state.end_date} ${state.end_time}`);
     new Response(data).text().then(console.log);
 
     return request("post", constants.GET_REPAIR_JOB, data);
