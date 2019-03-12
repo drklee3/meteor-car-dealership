@@ -1,6 +1,6 @@
 CREATE TABLE customers(
 	address VARCHAR(100) PRIMARY KEY,
-	phone   INT,
+	phone   VARCHAR(20),
 	email   VARCHAR(40), 
 	name    VARCHAR(40)  NOT NULL,
 	CONSTRAINT phone_or_email
