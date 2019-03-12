@@ -1,21 +1,12 @@
-create or replace procedure insert_problems(problem_count,:problem,repair_id)
-As
-	number qty;
-	number num_prob;
-	number prob_id;
-begin
-	select count(*) into problem_count from problem;
-	num_prob:=dbms_random.values(1,problem_count);
-	for i in 1..num_prob loop
-		prob_id:=dbms_random.values(1,problem_count);
-		insert into problem values (prob_id,:problem);
-		insert into Rep_Problems values(prob_id, repair_id);
-	end loop
-	qty:=num_prob*rand(0,1);
-	Select part_name into pname From parts sample(qty);
-	for i in 1..qty loop
-		insert into part_orders values(pname,repair_id,qty);
-	end loop;
-end;
+CREATE OR REPLACE PROCEDURE assign_problem_id (current_problem_type)
+AS
+	new_problem_id := 1;
+BEGIN 
+	SELECT max(problem_id) 
+		INTO new_problem_id 
+		FROM problems;
+	FOR i IN 1..dbms_random.values(1,5) LOOP
+		INSERT INTO problems(new_problem_id+i, current_problem_type);
+END;
 /
 show errors;

@@ -1,11 +1,12 @@
 --find max repair_id, then + 1
-
-CREATE or REPLACE Procedure assign_repair_id
-As
+CREATE OR REPLACE PROCEDURE assign_repair_id
+AS
 RETURN number IS
-	new_repair_id :=0;
+	new_repair_id := 0;
 BEGIN 
-	SELECT max(repair_id) into new_repair_id from repair_job;
+	SELECT max(repair_id) 
+		into new_repair_id 
+		from repair_job;
 	new_repair_id := new_repair_id + 1;
 	RETURN new_repair_id;
 END;
