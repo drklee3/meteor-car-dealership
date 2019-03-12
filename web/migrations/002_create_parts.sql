@@ -1,4 +1,4 @@
 CREATE TABLE parts(
-	name VARCHAR(40) PRIMARY KEY,
-	cost INT         NOT NULL	
+	name VARCHAR(40)   PRIMARY KEY,
+	cost NUMBER(10, 2) NOT NULL	
 ) 
