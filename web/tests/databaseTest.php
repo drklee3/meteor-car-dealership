@@ -23,6 +23,16 @@
             throw $t;
         }
 
+        public function testMigrations(): void {
+            // run migrations
+            $migrations_dir = __DIR__ . "/../migrations/";
+            $migrations_file = __DIR__ . "/../.migrations";
+            $mig = new Migrations($migrations_dir, $migrations_file);
+            $mig->start($this->db);
+
+            $this->addToAssertionCount(1); // no exception thrown
+        }
+
         public function testGetResults(): void {
             
             $sql = "SELECT 1 + 1 AS SUM FROM DUAL";

@@ -22,7 +22,9 @@
     header("Access-Control-Allow-Headers: X-Requested-With");
 
     // run migrations
-    $mig = new Migrations("../migrations/", "../.migrations");
+    $migrations_dir = __DIR__ . "/../migrations/";
+    $migrations_file = __DIR__ . "/../.migrations";
+    $mig = new Migrations($migrations_dir, $migrations_file);
     $db  = new Database();
     try {
         $mig->start($db);
