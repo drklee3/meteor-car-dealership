@@ -16,9 +16,24 @@
         "execute",
         "insert_repair_jobs.sql"
     ],
-    "/get_repair_job": [
+    "/get_bill": [
+        "GET",
+        "get_results",
+        "select_bill.sql"
+    ],
+    "/get_repair_jobs": [
         "GET",
         "get_results",
         "select_repair_jobs.sql"
+    ],
+    "/get_mechanics": [
+        "GET",
+        "get_results",
+        "select_mechanics.sql"
+    ],
+    "/get_revenue": [
+        "GET",
+        "get_results",
+        "select_revenue.sql"
     ]
 }
