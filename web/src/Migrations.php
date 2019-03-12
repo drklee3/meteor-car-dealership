@@ -21,8 +21,8 @@
             string $migrations_path = "../migrations/",
             string $hist_path = "./.migrations") {
             // update paths
-            $this->migrations_path = __DIR__ . "/" . $migrations_path;
-            $this->hist_path = __DIR__ . "/" . $hist_path;
+            $this->migrations_path = $migrations_path;
+            $this->hist_path = $hist_path;
             
             // read history file
             $this->read_hist();
