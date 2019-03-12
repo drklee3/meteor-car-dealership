@@ -1,8 +1,8 @@
-insert into mechanic values('Rosa Parks', 30.50);
-insert into mechanic values('Derrick Lee', 20.75);
-insert into mechanic values('Mika Philip', 15);
-insert into mechanic values('Eric Cheng', 16.25);
-insert into mechanic values('Gourdon Ramsey', 30.51);
+insert into mechanics values(1, 'Rosa Parks', '4013024710', 30.50);
+insert into mechanics values(2, 'Derrick Lee', '4013024710', 20.75);
+insert into mechanics values(3, 'Mika Philip', '4013024710', 15);
+insert into mechanics values(4, 'Eric Cheng', '4013024710', 16.25);
+insert into mechanics values(5, 'Gourdon Ramsey', '4013024710', 30.51);
 
 
 insert into parts values('Tire', 150);
