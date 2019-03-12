@@ -89,7 +89,7 @@ class Problems extends React.Component {
 }
 
 interface RepairJobStatus {
-    status: "idle" | "loading" | "finished" | "require_contact";
+    status: "idle" | "loading" | "finished" | "error" | "require_contact";
 }
 
 type RepairJobState = Readonly<RepairJobStatus>;
@@ -108,157 +108,163 @@ class RepairJob extends React.Component {
     private async handleSubmit(e: React.MouseEvent) {
         e.preventDefault();
         this.setState({status: "loading"});
-        const res = await request.new_repair_job(this.form);
-
-        // reset the form on submit
-        if (this.form.current) {
-            this.form.current.reset();
+        try {
+            const res = await request.new_repair_job(this.form);
+            
+            // reset the form on submit
+            if (this.form.current) {
+                this.form.current.reset();
+            }
+    
+            this.setState({status: "finished"});
+    
+            console.log(res);
+        } catch (e) {
+            this.setState({status: "error"});
+            console.log("error submitting job: ", e);
         }
-
-        this.setState({status: "finished"});
-
-        console.log(res);
     }
 
     public render() {
         return (
-            <div className="section">
-                <div className="container">
-                    <div className="columns">
-                        <div className="column is-half is-offset-one-quarter">
-                            <form className="form" ref={this.form}>
-                                <h3 className="title is-3">Create a New Repair Job</h3>
-                                <div className="field">
-                                    <label className="label">Name</label>
-                                    <p className="control is-expanded has-icons-left">
-                                        <input
-                                            name="binds[name]"
-                                            className="input"
-                                            type="text"
-                                            placeholder="Rosa Parks"
-                                            required={true}
-                                        />
-                                        <span className="icon is-small is-left">
-                                            <FontAwesomeIcon icon="user" />
-                                        </span>
-                                    </p>
-                                </div>
-                                <div className="field-body">
-                                    <div className="field">
-                                        <label className="label">Email</label>
-                                        <p className="control is-expanded has-icons-left">
-                                            <input
-                                                name="binds[email]"
-                                                className="input"
-                                                type="email"
-                                                placeholder="hello@dlee.dev"
-                                            />
-                                            <span className="icon is-small is-left">
-                                                <FontAwesomeIcon icon="envelope" />
-                                            </span>
-                                        </p>
-                                        {
-                                            this.state.status === "require_contact"
-                                            && <p className="help is-error">
-                                                Please provide Email and/or Phone
-                                            </p>
-                                        }
-                                    </div>
-                                    <div className="field">
-                                        <label className="label">Phone Number</label>
-                                        <p className="control is-expanded has-icons-left">
-                                            <input
-                                                name="binds[phone]"
-                                                className="input"
-                                                type="tel"
-                                                placeholder="123-456-7890"
-                                            />
-                                            <span className="icon is-small is-left">
-                                                <FontAwesomeIcon icon="phone" />
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="field">
-                                        <label className="label">Address</label>
-                                        <p className="control is-expanded has-icons-left">
-                                            <input
-                                                name="binds[address]" 
-                                                className="input"
-                                                type="text"
-                                                placeholder="123 maple road"
-                                            />
-                                            <span className="icon is-small is-left">
-                                                <FontAwesomeIcon icon="home" />
-                                            </span>
-                                        </p>
-                                </div>
-                                <hr/>
-                                <div className="field-body">
-                                    <div className="field">
-                                        <label className="label">License Number</label>
-                                        <p className="control is-expanded has-icons-left">
-                                            <input
-                                                name="binds[license]"
-                                                className="input"
-                                                type="text"
-                                                placeholder="1ABC123"
-                                                required={true}
-                                            />
-                                            <span className="icon is-small is-left">
-                                                <FontAwesomeIcon icon="hashtag" />
-                                            </span>
-                                        </p>
-                                    </div>
-                                    <div className="field">
-                                        <label className="label">Car Model</label>
-                                        <p className="control is-expanded has-icons-left">
-                                            <input
-                                                name="binds[model]"
-                                                className="input"
-                                                type="text"
-                                                placeholder="Lexus LFA"
-                                                required={true}
-                                            />
-                                            <span className="icon is-small is-left">
-                                                <FontAwesomeIcon icon="car" />
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                                <div className="field">
-                                    <label className="label">Problems</label>
-                                    <p className="control is-expanded">
-                                        <div className="select is-multiple is-fullwidth">
-                                            <select name="binds[problem_][]" multiple={true} size={3}>
-                                                {
-                                                    problemNames.map(problem => (
-                                                        <option value={problem} key={problem}>
-                                                            {problem}
-                                                        </option>
-                                                    ))
-                                                }
-                                            </select>
-                                        </div>
-                                    </p>
-                                </div>
-
-                                <Problems />
-
-                                <div className="field">
-                                    <button
-                                        className={`button is-link ${this.state.status
-                                            === "loading" && "is-loading"}`}
-                                        onClick={this.handleSubmit}>
-                                        Submit
-                                    </button>
-                                </div>
-                            </form>
+            <div>
+                <form className="form" ref={this.form}>
+                    <h3 className="title is-3">Create a New Repair Job</h3>
+                    <div className="field">
+                        <label className="label">Name</label>
+                        <p className="control is-expanded has-icons-left">
+                            <input
+                                name="binds[name]"
+                                className="input"
+                                type="text"
+                                placeholder="Rosa Parks"
+                                required={true}
+                            />
+                            <span className="icon is-small is-left">
+                                <FontAwesomeIcon icon="user" />
+                            </span>
+                        </p>
+                    </div>
+                    <div className="field-body">
+                        <div className="field">
+                            <label className="label">Email</label>
+                            <p className="control is-expanded has-icons-left">
+                                <input
+                                    name="binds[email]"
+                                    className="input"
+                                    type="email"
+                                    placeholder="hello@dlee.dev"
+                                />
+                                <span className="icon is-small is-left">
+                                    <FontAwesomeIcon icon="envelope" />
+                                </span>
+                            </p>
+                            {
+                                this.state.status === "require_contact"
+                                && <p className="help is-error">
+                                    Please provide Email and/or Phone
+                                </p>
+                            }
+                        </div>
+                        <div className="field">
+                            <label className="label">Phone Number</label>
+                            <p className="control is-expanded has-icons-left">
+                                <input
+                                    name="binds[phone]"
+                                    className="input"
+                                    type="tel"
+                                    placeholder="123-456-7890"
+                                />
+                                <span className="icon is-small is-left">
+                                    <FontAwesomeIcon icon="phone" />
+                                </span>
+                            </p>
                         </div>
                     </div>
-                </div>
-           </div>
+                    <div className="field">
+                            <label className="label">Address</label>
+                            <p className="control is-expanded has-icons-left">
+                                <input
+                                    name="binds[address]" 
+                                    className="input"
+                                    type="text"
+                                    placeholder="123 maple road"
+                                />
+                                <span className="icon is-small is-left">
+                                    <FontAwesomeIcon icon="home" />
+                                </span>
+                            </p>
+                    </div>
+                    <hr/>
+                    <div className="field-body">
+                        <div className="field">
+                            <label className="label">License Number</label>
+                            <p className="control is-expanded has-icons-left">
+                                <input
+                                    name="binds[license]"
+                                    className="input"
+                                    type="text"
+                                    placeholder="1ABC123"
+                                    required={true}
+                                />
+                                <span className="icon is-small is-left">
+                                    <FontAwesomeIcon icon="hashtag" />
+                                </span>
+                            </p>
+                        </div>
+                        <div className="field">
+                            <label className="label">Car Model</label>
+                            <p className="control is-expanded has-icons-left">
+                                <input
+                                    name="binds[model]"
+                                    className="input"
+                                    type="text"
+                                    placeholder="Lexus LFA"
+                                    required={true}
+                                />
+                                <span className="icon is-small is-left">
+                                    <FontAwesomeIcon icon="car" />
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div className="field">
+                        <label className="label">Problems</label>
+                        <div className="control is-expanded">
+                            <div className="select is-multiple is-fullwidth">
+                                <select name="binds[problem_][]" multiple={true} size={3}>
+                                    {
+                                        problemNames.map(problem => (
+                                            <option value={problem} key={problem}>
+                                                {problem}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Problems />
+
+                    <div className="field">
+                        <button
+                            type="submit"
+                            className={`button is-link ${this.state.status
+                                === "loading" && "is-loading"}`}
+                            onClick={this.handleSubmit}>
+                            Submit
+                        </button>
+                        {
+                            this.state.status === "error"
+                                && <p className="help is-error has-text-danger">
+                                        Failed to submit job
+                                    </p>
+                        }
+                    </div>
+                </form>
+            </div>
         );
     }
 }

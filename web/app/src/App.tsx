@@ -2,6 +2,7 @@ import * as React from "react";
 import Header from "./components/Header";
 import Options from "./components/Options";
 import RepairJob from "./components/RepairJob";
+import RepairJobListing from "./components/RepairJobListing";
 import "./styles/App.css";
 import "./Icons.ts";
 
@@ -37,23 +38,31 @@ class App extends React.Component {
         return (
             <div>
                 <Header />
-                <p className="container">current state: {this.state.action}</p>
+                
                 <Options click={this.handleClick} activeAction={this.state.action} />
-                {
-                    // manually chekcing for each cause im lazy bruh
-                    this.state.action === AppAction.NewRepairJob
-                        && <RepairJob />
-                }
+                <div className="section">
+                    <div className="container">
+                        <div className="columns">
+                            <div className="column is-half is-offset-one-quarter">
+                                {
+                                    // manually chekcing for each cause im lazy bruh
+                                    this.state.action === AppAction.NewRepairJob
+                                        && <RepairJob />
+                                }
 
-                {
-                    this.state.action === AppAction.GenerateBill
-                        && <p className="container">give me your money</p>
-                }
+                                {
+                                    this.state.action === AppAction.GenerateBill
+                                        && <p className="container">give me your money</p>
+                                }
 
-                {
-                    this.state.action === AppAction.ShowRepairJobs
-                        && <p className="container">ur face need repair</p>
-                }
+                                {
+                                    this.state.action === AppAction.ShowRepairJobs
+                                        && <RepairJobListing />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

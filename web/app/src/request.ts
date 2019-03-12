@@ -35,3 +35,12 @@ export function new_repair_job(e: React.RefObject<HTMLFormElement>) {
 
     return request("post", constants.NEW_REPAIR_JOB, data);
 }
+
+export function get_repair_jobs(start: number, end: number) {
+    const data = new FormData();
+    data.append("binds[start_date]", start.toString());
+    data.append("binds[end_date]", end.toString());
+    new Response(data).text().then(console.log);
+
+    return request("post", constants.GET_REPAIR_JOB, data);
+}
