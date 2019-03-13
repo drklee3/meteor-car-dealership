@@ -48,6 +48,9 @@
          */
         public function get_bind_variables(): ?array {
             $body = $this->get_body();
+            if (!isset($body["binds"])) {
+                return null;
+            }
             return $body["binds"];
         }
     }
