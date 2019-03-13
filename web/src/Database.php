@@ -112,11 +112,19 @@
                 }
             }
 
-            $res = oci_execute($stid);
+            try {
+                $res = oci_execute($stid);
+            } catch (Exception $e) {
+                $sql_err = oci_error($stid);
+
+                error_log("Failed to run $action statement:");
+                print_r($sql_err);
+                throw $e;
+            }
 
             if ($res === FALSE) {
                 $e = oci_error($conn);
-                trigger_error(htmlentities($e["message"]), E_USER_ERROR);
+                error_log(htmlentities($e["message"]));
                 throw new Exception("Error running statement: " . $e["message"]);
             }
 

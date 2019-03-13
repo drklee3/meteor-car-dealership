@@ -17,7 +17,12 @@
         protected function onNotSuccessfulTest(Throwable $t): void {
             // drop testing table
             $sql = "DROP TABLE testing123";
-            $res = $this->db->execute($sql);
+
+            try {
+                $res = $this->db->execute($sql);
+            } catch (Exception $e) {
+                // do nothing if this fails since some dont require this table
+            }
 
             fwrite(STDOUT, __METHOD__ . "\n");
             throw $t;
@@ -28,7 +33,20 @@
             $migrations_dir = __DIR__ . "/../migrations/";
             $migrations_file = __DIR__ . "/../.migrations";
             $mig = new Migrations($migrations_dir, $migrations_file);
-            $mig->start($this->db);
+            try {
+                $mig->start($this->db);
+            } catch (Exception $e) {
+                $sql = "SELECT TEXT FROM ALL_ERRORS";
+                $res = $this->db->get_results($sql);
+                $res_str = "";
+                foreach ($res[1] as $key => $val) {
+                    $res_str .= $val["TEXT"];
+                }
+
+                error_log($res_str);
+
+                throw $e;
+            }
 
             $this->addToAssertionCount(1); // no exception thrown
         }
