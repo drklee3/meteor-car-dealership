@@ -124,8 +124,15 @@
 
             if ($res === FALSE) {
                 $e = oci_error($conn);
-                error_log(htmlentities($e["message"]));
-                throw new Exception("Error running statement: " . $e["message"]);
+                $e_msg = "";
+                if (isset($e["message"])) {
+                    $e_msg = "Error running statement: " . $e["message"];
+                    
+                } else {
+                    $e_msg = "failed to run statement, unknown err";
+                }
+                error_log($e_msg);
+                throw new Exception($e_msg);
             }
 
             // no return values for execute, don't run oci_fetch_all
