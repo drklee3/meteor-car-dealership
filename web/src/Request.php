@@ -33,12 +33,7 @@
                 return null;
             }
 
-            $body = array();
-
-            foreach($_POST as $key => $value) {
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-            }
-            return $body;
+            return $_POST;
         }
 
         /**
@@ -48,6 +43,11 @@
          */
         public function get_bind_variables(): ?array {
             $body = $this->get_body();
+            if (!isset($body["binds"])) {
+                return null;
+            }
+            error_log(json_encode($_POST));
+            error_log(json_encode($body));
             return $body["binds"];
         }
     }

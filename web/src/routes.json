@@ -22,9 +22,9 @@
         "select_bill.sql"
     ],
     "/get_repair_jobs": [
-        "GET",
+        "POST",
         "get_results",
-        "select_repair_jobs.sql"
+        "get_repair_jobs.sql"
     ],
     "/get_mechanics": [
         "GET",

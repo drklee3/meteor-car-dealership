@@ -112,12 +112,27 @@
                 }
             }
 
-            $res = oci_execute($stid);
+            try {
+                $res = oci_execute($stid);
+            } catch (Exception $e) {
+                $sql_err = oci_error($stid);
+
+                error_log("Failed to run $action statement:");
+                print_r($sql_err);
+                throw $e;
+            }
 
             if ($res === FALSE) {
                 $e = oci_error($conn);
-                trigger_error(htmlentities($e["message"]), E_USER_ERROR);
-                throw new Exception("Error running statement: " . $e["message"]);
+                $e_msg = "";
+                if (isset($e["message"])) {
+                    $e_msg = "Error running statement: " . $e["message"];
+                    
+                } else {
+                    $e_msg = "failed to run statement, unknown err";
+                }
+                error_log($e_msg);
+                throw new Exception($e_msg);
             }
 
             // no return values for execute, don't run oci_fetch_all

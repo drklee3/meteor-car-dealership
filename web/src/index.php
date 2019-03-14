@@ -71,7 +71,7 @@
             } catch (Exception $e) {
                 // had an oopsies, give error
                 $msg["result"] = "error";
-                $msg["message"] = $e;
+                $msg["message"] = $e->getMessage();
             }
 
             // respond in json
