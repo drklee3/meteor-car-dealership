@@ -19,7 +19,7 @@ DECLARE
               ORDER BY DBMS_RANDOM.RANDOM)
          WHERE ROWNUM <= num_problems;
     
-    problem_row problem_cur % ROWTYPE;
+    problem problem_cur % ROWTYPE;
 
     -- get # of parts, scaled by number of problems
     num_parts INTEGER := num_problems * DBMS_RANDOM.VALUE(1, 3);
@@ -29,7 +29,7 @@ DECLARE
           FROM (SELECT name
                   FROM parts
               ORDER BY DBMS_RANDOM.RANDOM)
-         WHERE ROWNUM < num_parts;
+         WHERE ROWNUM <= num_parts;
         
     part parts_cur % ROWTYPE;
 
@@ -44,9 +44,9 @@ BEGIN
      WHERE address = cust_address;
 
     -- insert only new customer
-    IF cust_exists IS NULL THEN
+    IF cust_exists IS NULL OR cust_exists = 0 THEN
         INSERT
-        INTO customers
+          INTO customers
         VALUES (cust_address, :phone, :email, :name);
     END IF;
 
@@ -57,10 +57,10 @@ BEGIN
      WHERE licence_no = car_licence_no;
     
     -- insert only if car doesn't exist
-    IF car_exists IS NULL THEN
+    IF car_exists IS NULL OR car_exists = 0 THEN
         -- insert car data
         INSERT
-        INTO cars
+          INTO cars
         VALUES (car_licence_no, cust_address, :model);
     END IF;
     
@@ -85,11 +85,11 @@ BEGIN
      WHERE ROWNUM = 1;
 
     -- insert repair problems
-    FOR problem_row IN problem_cur
+    FOR problem IN problem_cur
     LOOP
         INSERT
           INTO repair_problems
-        VALUES (problem_row.id, new_repair_id);
+        VALUES (problem.id, new_repair_id);
     END LOOP;
 
     -- get labour hours
