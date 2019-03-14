@@ -11,10 +11,10 @@
         "one_plus_one.sql"
     ],
 
-    "__/new_repair_job": [
+    "/insert_repair_job": [
         "POST",
         "execute",
-        "insert_repair_jobs.sql"
+        "insert_repair_job.sql"
     ],
     "/get_bill": [
         "GET",
