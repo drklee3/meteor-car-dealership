@@ -36,9 +36,10 @@
             try {
                 $mig->start($this->db);
             } catch (Exception $e) {
-                $sql = "SELECT TEXT FROM ALL_ERRORS";
+                $sql = "SELECT LINE, POSITION, TEXT FROM ALL_ERRORS";
                 $res = $this->db->get_results($sql);
                 $res_str = "";
+                var_dump($res);
                 foreach ($res[1] as $key => $val) {
                     $res_str .= $val["TEXT"];
                 }
