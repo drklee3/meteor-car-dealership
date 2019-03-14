@@ -5,5 +5,6 @@
 NATURAL JOIN mechanics
 NATURAL JOIN cars
        WHERE time_in
-     BETWEEN :start_date
-         AND :end_date
+     BETWEEN TO_DATE(:start_date, 'YYYY-MM-DD')
+         AND TO_DATE(:end_date, 'YYYY-MM-DD')
+    ORDER BY repair_id
