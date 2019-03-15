@@ -26,7 +26,25 @@ BEGIN
                NATURAL JOIN repair_jobs
                    GROUP BY emp_id);
     
-    SELECT emp_id
-           , name
-      FROM mechanics;
-      
+   -- emp with least hours
+  	  SELECT emp_id
+            FROM mechanics
+    NATURAL JOIN repair_jobs 
+	GROUP BY emp_id, name
+	 HAVING SUM(labour_hours) <= ALL (
+		      SELECT SUM(labour_hours)
+			FROM mechanics
+		NATURAL JOIN repair_jobs
+		    GROUP BY emp_id);
+
+   -- emp avg hours
+	  SELECT emp_id
+            FROM mechanics
+    NATURAL JOIN repair_jobs
+	GROUP BY emp_id, name
+	  HAVING labour_hours = ALL (
+		      SELECT AVG(labour_hours)
+		        FROM mechanics
+		NATURAL JOIN repair_jobs
+		    GROUP BY emp_id);
+END;
