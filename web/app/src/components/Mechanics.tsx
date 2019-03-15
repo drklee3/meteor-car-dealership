@@ -1,7 +1,7 @@
 import * as React from "react";
-// import {AppAction} from "../App";
+// import * as request from "../request";
 
-class Bill extends React.Component {
+export default class Mechanics extends React.Component {
     public render() {
         return (
             <div>
@@ -10,6 +10,3 @@ class Bill extends React.Component {
         );
     }
 }
-
-export default Bill;
-

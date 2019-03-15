@@ -50,31 +50,33 @@ class Options extends React.Component<OptionsProps> {
         return (
             <div className="section">
                 <div className="container">
-                    <div className="buttons">
-                        <Option
-                            name="New Repair Job"
-                            click={this.props.click}
-                            action={AppAction.NewRepairJob}
-                            activeAction={this.props.activeAction}
-                        />
-                        <Option
-                            name="Generate Bill"
-                            click={this.props.click}
-                            action={AppAction.GenerateBill}
-                            activeAction={this.props.activeAction}
-                        />
-                        <Option
-                            name="Show Repair Jobs"
-                            click={this.props.click}
-                            action={AppAction.ShowRepairJobs}
-                            activeAction={this.props.activeAction}
-                        />
-                        <Option
-                            name="Show Mechanics"
-                            click={this.props.click}
-                            action={AppAction.ShowMechanics}
-                            activeAction={this.props.activeAction}
-                        />
+                    <div className="columns">
+                        <div className="column is-half is-offset-one-quarter buttons">
+                            <Option
+                                name="New Repair Job"
+                                click={this.props.click}
+                                action={AppAction.NewRepairJob}
+                                activeAction={this.props.activeAction}
+                            />
+                            <Option
+                                name="Generate Bill"
+                                click={this.props.click}
+                                action={AppAction.GenerateBill}
+                                activeAction={this.props.activeAction}
+                            />
+                            <Option
+                                name="Show Repair Jobs"
+                                click={this.props.click}
+                                action={AppAction.ShowRepairJobs}
+                                activeAction={this.props.activeAction}
+                            />
+                            <Option
+                                name="Show Mechanics"
+                                click={this.props.click}
+                                action={AppAction.ShowMechanics}
+                                activeAction={this.props.activeAction}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

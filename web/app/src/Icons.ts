@@ -5,6 +5,7 @@ import {
     faHashtag,
     faHome,
     faPhone,
+    faTools,
     faUser,
     faQuestion
 } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +16,7 @@ library.add(
     faHashtag,
     faHome,
     faPhone,
+    faTools,
     faUser,
     faQuestion,
 );
