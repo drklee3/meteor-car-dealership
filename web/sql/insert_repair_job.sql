@@ -84,14 +84,6 @@ BEGIN
           ORDER BY DBMS_RANDOM.VALUE)
      WHERE ROWNUM = 1;
 
-    -- insert repair problems
-    FOR problem IN problem_cur
-    LOOP
-        INSERT
-          INTO repair_problems
-        VALUES (problem.id, new_repair_id);
-    END LOOP;
-
     -- get labour hours
     labour_hours := num_problems * DBMS_RANDOM.VALUE(2, 5);
 
@@ -104,6 +96,13 @@ BEGIN
             , TO_DATE(:time_in, 'YYYY-MM-DD')
             , NULL);
     
+    -- insert repair problems
+    FOR problem IN problem_cur
+    LOOP
+        INSERT
+          INTO repair_problems
+        VALUES (problem.id, new_repair_id);
+    END LOOP;
 
     -- insert part orders
     FOR part IN parts_cur
