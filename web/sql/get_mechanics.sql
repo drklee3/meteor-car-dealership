@@ -42,9 +42,10 @@ BEGIN
             FROM mechanics
     NATURAL JOIN repair_jobs
 	GROUP BY emp_id, name
-	  HAVING labour_hours = ALL (
+	  -- dunno if need ALL after = 
+	  HAVING labour_hours = 
 		      SELECT AVG(labour_hours)
 		        FROM mechanics
 		NATURAL JOIN repair_jobs
-		    GROUP BY emp_id);
+		    GROUP BY emp_id;
 END;
