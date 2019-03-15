@@ -2,14 +2,19 @@ import * as React from "react";
 import * as request from "../request";
 
 interface JobListingItem {
-    model: string;
-    repair_id: string;
-    description: string;
-    mechanic: string;
+    MODEL: string;
+    REPAIR_ID: string;
+    NAME: string;
+}
+
+interface JobListing {
+    num_rows: number;
+    result: string;
+    rows: JobListingItem[];
 }
 
 export type RepairJobListingState = {
-    repairJobs: JobListingItem[];
+    repairJobs?: JobListing;
     status: "idle" | "loading" | "finished" | "error" | "require_contact";
     start_date: string;
     start_time: string;
@@ -19,11 +24,11 @@ export type RepairJobListingState = {
 
 class RepairJobListing extends React.Component<any, RepairJobListingState> {
     readonly state: RepairJobListingState = {
-        repairJobs: [], // initial none
+        repairJobs: undefined, // initial none
         status: "idle",
-        start_date: "2019-02-20",
+        start_date: "2019-01-20",
         start_time: "00:00:00",
-        end_date:   "2019-03-14",
+        end_date:   "2019-05-20",
         end_time: "23:59:59",
     };
 
@@ -48,10 +53,14 @@ class RepairJobListing extends React.Component<any, RepairJobListingState> {
             if (this.form.current) {
                 this.form.current.reset();
             }
-    
-            this.setState({status: "finished"});
-    
+            
             console.log(res);
+    
+            this.setState({
+                status: "finished",
+                repairJobs: res.data
+            });
+    
         } catch (e) {
             this.setState({status: "error"});
             console.log("error fetching jobs: ", e);
@@ -92,13 +101,7 @@ class RepairJobListing extends React.Component<any, RepairJobListingState> {
                                     type="date"
                                     name="binds[start_date]"
                                     required={true}
-                                    defaultValue="2019-02-20"
-                                />
-                                <input
-                                    onChange={this.handleStartTimeChange}
-                                    type="time"
-                                    name="binds[start_time]"
-                                    defaultValue="00:00:00"
+                                    defaultValue="2019-01-20"
                                 />
                             </p>
                         </div>
@@ -110,13 +113,7 @@ class RepairJobListing extends React.Component<any, RepairJobListingState> {
                                     type="date"
                                     name="binds[end_date]"
                                     required={true}
-                                    defaultValue="2019-03-14"
-                                />
-                                <input
-                                    onChange={this.handleEndTimeChange}
-                                    type="time"
-                                    name="binds[end_time]"
-                                    defaultValue="23:59:59"
+                                    defaultValue="2019-05-20"
                                 />
                             </p>
                         </div>
@@ -143,18 +140,17 @@ class RepairJobListing extends React.Component<any, RepairJobListingState> {
                         <tr>
                         <th>Model</th>
                         <th>Repair ID</th>
-                        <th>Description</th>
                         <th>Mechanic</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            this.state.repairJobs.map(job => (
-                                <tr>
-                                    <td>{job.model}</td>
-                                    <td>{job.repair_id}</td>
-                                    <td>{job.description}</td>
-                                    <td>{job.mechanic}</td>
+                            this.state.repairJobs
+                            && this.state.repairJobs.rows.map(job => (
+                                <tr key={job.REPAIR_ID}>
+                                    <td>{job.REPAIR_ID}</td>
+                                    <td>{job.MODEL}</td>
+                                    <td>{job.NAME}</td>
                                 </tr>
                             ))
                         }
