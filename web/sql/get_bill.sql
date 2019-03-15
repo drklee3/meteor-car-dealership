@@ -1,3 +1,4 @@
+-- Part B
 DECLARE
 	total NUMBER(100,2);
 BEGIN
