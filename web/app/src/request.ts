@@ -33,14 +33,17 @@ export function new_repair_job(e: React.RefObject<HTMLFormElement>) {
     const data = new FormData(e.current);
 
     new Response(data).text().then(console.log);
+    const now = new Date;
+    const nowStr = now.toISOString().split("T")[0];
+    data.append("binds[time_in]", nowStr);
 
     return request("post", constants.NEW_REPAIR_JOB, data);
 }
 
 export function get_repair_jobs(state: RepairJobListingState) {
     const data = new FormData();
-    data.append("binds[start_date]", `${state.start_date} ${state.start_time}`);
-    data.append("binds[end_date]", `${state.end_date} ${state.end_time}`);
+    data.append("binds[start_date]", state.start_date);
+    data.append("binds[end_date]", state.end_date);
     new Response(data).text().then(console.log);
 
     return request("post", constants.GET_REPAIR_JOB, data);

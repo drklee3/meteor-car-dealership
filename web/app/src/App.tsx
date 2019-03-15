@@ -1,4 +1,5 @@
 import * as React from "react";
+import Bill from "./components/Bill";
 import Header from "./components/Header";
 import Options from "./components/Options";
 import RepairJob from "./components/RepairJob";
@@ -52,7 +53,7 @@ class App extends React.Component {
 
                                 {
                                     this.state.action === AppAction.GenerateBill
-                                        && <p className="container">give me your money</p>
+                                        && <Bill />
                                 }
 
                                 {

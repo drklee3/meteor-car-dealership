@@ -8,17 +8,14 @@ type State = Readonly<typeof problemState>;
 const problemNames = [
     "wheel fell off",
     "door fell off",
-    "you fell off",
-    "sounds like a personal problem",
     "engine overheating",
     "coolant leak",
     "broken window",
     "engine stall",
     "dead battery",
-    "i want to die"
 ];
 
-class Problems extends React.Component {
+export class Problems extends React.Component {
     readonly state: State = problemState;
 
     constructor(props: any) {
@@ -137,7 +134,7 @@ class RepairJob extends React.Component {
                                 name="binds[name]"
                                 className="input"
                                 type="text"
-                                placeholder="Rosa Parks"
+                                placeholder="Kimberley Chen"
                                 required={true}
                             />
                             <span className="icon is-small is-left">
@@ -201,7 +198,7 @@ class RepairJob extends React.Component {
                             <label className="label">License Number</label>
                             <p className="control is-expanded has-icons-left">
                                 <input
-                                    name="binds[license]"
+                                    name="binds[licence_no]"
                                     className="input"
                                     type="text"
                                     placeholder="1ABC123"
@@ -229,11 +226,11 @@ class RepairJob extends React.Component {
                         </div>
                     </div>
                     
-                    <div className="field">
+                    <div className="field" style={{display: "none"}}>
                         <label className="label">Problems</label>
                         <div className="control is-expanded">
                             <div className="select is-multiple is-fullwidth">
-                                <select name="binds[problem_][]" multiple={true} size={3}>
+                                <select name="__binds[problem][]" multiple={true} size={3}>
                                     {
                                         problemNames.map(problem => (
                                             <option value={problem} key={problem}>
@@ -245,8 +242,6 @@ class RepairJob extends React.Component {
                             </div>
                         </div>
                     </div>
-
-                    <Problems />
 
                     <div className="field">
                         <button
