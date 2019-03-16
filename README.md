@@ -20,7 +20,10 @@ Tools and Technologies required: Oracle Database, HTML and PHP.  At least one PL
   * [Installation (Script)](#installation-script)
   * [Manual Installation](#manual-installation)
     * [Prerequisites](#prerequisites)
+    * [Back-End](#back-end)
+    * [Front-End](#front-end)
     * [Installation (Manual)](#installation-manual)
+  * [Running](#running)
   * [Project Layout](#project-layout)
     * [Directory / File Structure](#directory--file-structure)
   * [Troubleshooting](#troubleshooting)
@@ -62,6 +65,8 @@ If passing the `-e` flag to read authentication options from environment variabl
 
 You will need to download and install the following prerequisites.
 
+### Back-End
+
 * [Docker](https://docs.docker.com/install/)
 
 * [Docker Compose](https://docs.docker.com/compose/install/)
@@ -86,6 +91,11 @@ You will need to download and install the following prerequisites.
        ```bash
        ./buildDockerImage.sh -v 11.2.0.2 -x
        ```
+
+### Front-End
+
+* [Node.js](https://nodejs.org/en/download/)
+* [npm](https://www.npmjs.com/get-npm)
 
 ### Installation (Manual)
 
@@ -116,22 +126,46 @@ You will need to download and install the following prerequisites.
     vim .env
     ```
 
-4. Run docker containers.
+4. Install front-end dependencies.
+
+    ```bash
+    cd web/app/
+    npm install
+    ```
+
+## Running
+
+1. Start docker containers.
 
     ```bash
     docker-compose up
     ```
 
-5. Wait for the `DATABASE IS READY TO USE` message, then open [localhost:8080](http://localhost:8080/) in your browser.
-
-    To access the database via `sqplus` you can use the following command
+2. Build the front-end application for production.
 
     ```bash
-    docker exec -ti <docker image name> sqlplus <username>@<database>
-
-    # example
-    docker exec -ti meteor-car-dealership_database_1 sqlplus dlee@XE
+    cd web/app/
+    npm run build
     ```
+
+    To run it in development mode with live reloading.
+
+    ```bash
+    cd web/app/
+    npm start
+    ```
+
+3. Wait for the `DATABASE IS READY TO USE` message, then open [localhost:8080](http://localhost:8080/) in your browser.
+   If running the front end in development mode, open [localhost:3000](http://localhost:3000/).
+
+To access the database via `sqplus` you can use the following command
+
+```bash
+docker exec -ti <docker image name> sqlplus <username>@<database>
+
+# example
+docker exec -ti meteor-car-dealership_database_1 sqlplus dlee@XE
+```
 
 ## Project Layout
 
@@ -149,6 +183,10 @@ Bolded directories are where the important logic of the application is located.
 * [oracle](oracle/) - Set up and start up scripts for Oracle Database.
 * [web](web/) - Website content.
   * [**app**](web/app/) - Front end application.
+    * [public](web/app/public/) - Public static files.
+    * [src](web/app/src/) - React and TypeScript application source code.
+      * [components](web/app/src/components) - React components.
+      * [styles](web/app/src/styles) - SASS files.
   * [**migrations**](web/migrations/) - SQL migrations.
 
     These SQL statements will run at start once (after it executes once, it will not run again). This is where you would create / delete / modify your SQL tables.  Migrations will run in ascending order based on filename (`000-xxx`, `001-xxx`, `002-xxx`, ...). Make sure SQL statements **do not** end with a semicolon (`;`) and PL/SQL statements **do** end with a semicolon.
