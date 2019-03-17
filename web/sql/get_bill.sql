@@ -14,3 +14,5 @@ NATURAL JOIN customers
 NATURAL JOIN cars
         JOIN mechanics
           ON repair_jobs.emp_id = mechanics.emp_id
+
+DELETE FROM REPAIR_JOB;
